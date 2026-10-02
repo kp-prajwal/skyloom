@@ -1,0 +1,18 @@
+{
+  "archive": {
+    "recent_days": 90,
+    "rendered_images_in_git": false,
+    "retain_recipes_forever": true
+  },
+  "model": {
+    "critic_enabled": true,
+    "director_enabled": true,
+    "name": "@cf/openai/gpt-oss-20b",
+    "provider": "cloudflare"
+  },
+  "studio": {
+    "name": "Skyloom",
+    "tagline": "Weather suggests. Models propose. Skyloom decides.",
+    "timezone": "America/Chicago"
+  }
+}

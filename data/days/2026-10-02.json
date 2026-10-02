@@ -1,0 +1,108 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 8.497,
+          "contrast": 10.0,
+          "coverage": 6.856,
+          "novelty": 0.0,
+          "stroke_length": 9.675,
+          "weather_fit": 8.407
+        },
+        "total": 7.568
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 8.497,
+          "contrast": 10.0,
+          "coverage": 7.269,
+          "novelty": 0.564,
+          "stroke_length": 9.675,
+          "weather_fit": 8.407
+        },
+        "total": 7.71
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 8.497,
+          "contrast": 10.0,
+          "coverage": 6.597,
+          "novelty": 0.61,
+          "stroke_length": 9.675,
+          "weather_fit": 8.985
+        },
+        "total": 7.699
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 8.383,
+          "contrast": 10.0,
+          "coverage": 7.277,
+          "novelty": 1.526,
+          "stroke_length": 8.601,
+          "weather_fit": 8.407
+        },
+        "total": 7.64
+      }
+    }
+  },
+  "critique": {
+    "mutation": {
+      "flow_scale": 0.0005,
+      "horizon": -0.01
+    },
+    "source": "fallback",
+    "verdict": "The measured novelty score has the clearest room to improve."
+  },
+  "date": "2026-10-02",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [],
+  "palette": [
+    "#17263f",
+    "#527c94",
+    "#e19a67",
+    "#f5d7a4"
+  ],
+  "poem": [
+    "Above Kyoto, pale light crosses the open sky,",
+    "the wind carries one color into another,",
+    "and morning begins before anyone asks it to."
+  ],
+  "title": "First Light over Kyoto",
+  "weather": {
+    "city": "Kyoto",
+    "cloud_cover": 45,
+    "country": "JP",
+    "fallback_reason": "offline mode",
+    "is_day": 1,
+    "latitude": 35.0116,
+    "longitude": 135.7681,
+    "precipitation_mm": 0.0,
+    "source": "fallback",
+    "temperature_c": 12.0,
+    "weather_code": 2,
+    "wind_direction": 225,
+    "wind_kph": 10.0
+  },
+  "winner": "critic",
+  "winning_genome": {
+    "curl": 1.50385,
+    "flow_scale": 0.00933,
+    "horizon": 0.55898,
+    "light_x": 0.71021,
+    "light_y": 0.35375,
+    "opacity": 0.28089,
+    "step_length": 7.78852,
+    "steps": 25,
+    "stroke_count": 544,
+    "stroke_width": 1.35
+  }
+}

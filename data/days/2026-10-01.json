@@ -1,0 +1,108 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 9.767,
+          "contrast": 10.0,
+          "coverage": 6.179,
+          "novelty": 7.2,
+          "stroke_length": 9.31,
+          "weather_fit": 6.84
+        },
+        "total": 8.253
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 9.767,
+          "contrast": 10.0,
+          "coverage": 6.179,
+          "novelty": 7.2,
+          "stroke_length": 9.31,
+          "weather_fit": 6.84
+        },
+        "total": 8.253
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 9.767,
+          "contrast": 10.0,
+          "coverage": 5.94,
+          "novelty": 7.2,
+          "stroke_length": 9.31,
+          "weather_fit": 7.418
+        },
+        "total": 8.314
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 8.497,
+          "contrast": 10.0,
+          "coverage": 6.856,
+          "novelty": 7.2,
+          "stroke_length": 9.675,
+          "weather_fit": 8.407
+        },
+        "total": 8.432
+      }
+    }
+  },
+  "critique": {
+    "mutation": {
+      "opacity": 0.008,
+      "stroke_count": 24
+    },
+    "source": "fallback",
+    "verdict": "The measured coverage score has the clearest room to improve."
+  },
+  "date": "2026-10-01",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [],
+  "palette": [
+    "#17263f",
+    "#527c94",
+    "#e19a67",
+    "#f5d7a4"
+  ],
+  "poem": [
+    "Above Reykjavik, pale light crosses the open sky,",
+    "the wind carries one color into another,",
+    "and morning begins before anyone asks it to."
+  ],
+  "title": "First Light over Reykjavik",
+  "weather": {
+    "city": "Reykjavik",
+    "cloud_cover": 45,
+    "country": "IS",
+    "fallback_reason": "offline mode",
+    "is_day": 1,
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "precipitation_mm": 0.0,
+    "source": "fallback",
+    "temperature_c": 12.0,
+    "weather_code": 2,
+    "wind_direction": 225,
+    "wind_kph": 10.0
+  },
+  "winner": "explorer",
+  "winning_genome": {
+    "curl": 1.50385,
+    "flow_scale": 0.00933,
+    "horizon": 0.55898,
+    "light_x": 0.71021,
+    "light_y": 0.35375,
+    "opacity": 0.27289,
+    "step_length": 7.78852,
+    "steps": 25,
+    "stroke_count": 520,
+    "stroke_width": 1.35
+  }
+}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Skyloom weaves weather into autonomous generative art.">
+  <title>Skyloom</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="#top" aria-label="Skyloom home">
+      <span class="brand-mark">☼</span>
+      <span>Skyloom</span>
+    </a>
+    <p class="status"><span class="pulse"></span> paints once each day</p>
+  </header>
+
+  <main id="top">
+    <section id="hero" class="hero" aria-live="polite">
+      <div class="loading">The studio is opening its shutters…</div>
+    </section>
+
+    <section class="about">
+      <p class="eyebrow">A SMALL AUTONOMOUS STUDIO</p>
+      <h2>The weather suggests.<br>The model proposes.<br>The measurements decide.</h2>
+      <p>Every morning, four mathematical compositions compete. The highest-scoring piece becomes the next generation’s starting point.</p>
+    </section>
+
+    <section class="archive" aria-labelledby="archive-title">
+      <div class="section-heading">
+        <p class="eyebrow">THE ARCHIVE</p>
+        <h2 id="archive-title">Previous mornings</h2>
+      </div>
+      <div id="gallery" class="gallery"></div>
+      <button id="load-archive" class="archive-button" type="button" hidden>Load older mornings</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>Weather data by <a href="https://open-meteo.com/" rel="noreferrer">Open-Meteo</a>.</p>
+    <p>Weather suggests. Models propose. Skyloom decides.</p>
+  </footer>
+  <script src="app.js" defer></script>
+</body>
+</html>

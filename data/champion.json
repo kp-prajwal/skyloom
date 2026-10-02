@@ -1,0 +1,20 @@
+{
+  "critic_mutation": {
+    "flow_scale": 0.0005,
+    "horizon": -0.01
+  },
+  "generation": 2,
+  "genome": {
+    "curl": 1.50385,
+    "flow_scale": 0.00933,
+    "horizon": 0.55898,
+    "light_x": 0.71021,
+    "light_y": 0.35375,
+    "opacity": 0.28089,
+    "step_length": 7.78852,
+    "steps": 25,
+    "stroke_count": 544,
+    "stroke_width": 1.35
+  },
+  "updated": "2026-10-02"
+}
