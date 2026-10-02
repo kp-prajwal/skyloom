@@ -50,9 +50,13 @@ def _run(messages: list[dict], max_tokens: int, seed: int) -> dict:
     return _extract_json(text)
 
 
-def direct(weather: dict, champion: dict, recent: list[dict], seed: int) -> dict:
+def direct(weather: dict, city: dict, champion: dict, recent: list[dict], seed: int) -> dict:
     prompt = {
         "weather": weather,
+        "verified_city_context": {
+            "brief": city.get("brief"),
+            "important_fact": city.get("fact"),
+        },
         "current_genome": champion,
         "recent_titles": [item.get("title") for item in recent[-7:]],
         "allowed_mutations": {
@@ -64,9 +68,10 @@ def direct(weather: dict, champion: dict, recent: list[dict], seed: int) -> dict
     }
     return _run([
         {"role": "system", "content": (
-            "You art-direct a deterministic morning artwork. Return JSON only with keys title, poem, palette, "
+            "You art-direct a deterministic city data portrait. Return JSON only with keys title, poem, palette, "
             "mutation, rationale. poem must be an array of exactly 3 short lines. palette must contain exactly "
-            "4 hex colors. mutation may contain only allowed gene names and must respect the supplied delta ranges."
+            "4 hex colors. mutation may contain only allowed gene names and must respect the supplied delta ranges. "
+            "Use the verified city context only for atmosphere; do not introduce new factual claims."
         )},
         {"role": "user", "content": json.dumps(prompt, separators=(",", ":"))},
     ], max_tokens=430, seed=seed)

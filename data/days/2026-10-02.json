@@ -53,6 +53,14 @@
       }
     }
   },
+  "city": {
+    "brief": "Kyoto was Japan's imperial capital for more than a millennium. Its grid, temples, gardens, craft traditions, and layered neighborhoods still carry that history into daily life.",
+    "fact": "Kyoto served as Japan's imperial capital from 794 until the imperial court moved to Tokyo in 1869.",
+    "fact_source": "https://en.wikipedia.org/wiki/Kyoto",
+    "source": "https://en.wikipedia.org/wiki/Kyoto",
+    "source_label": "Wikipedia",
+    "source_status": "curated-fallback"
+  },
   "critique": {
     "mutation": {
       "flow_scale": 0.0005,
@@ -78,16 +86,33 @@
   ],
   "title": "First Light over Kyoto",
   "weather": {
+    "apparent_temperature_c": 11.0,
+    "best_window": {
+      "end": "18:00",
+      "label": "3\u20136 PM",
+      "rain_probability": 10,
+      "reason": "A mild, mostly dry three-hour stretch with manageable wind.",
+      "score": 72,
+      "start": "15:00",
+      "temperature_c": 12.0,
+      "wind_kph": 10.0
+    },
     "city": "Kyoto",
     "cloud_cover": 45,
     "country": "JP",
+    "daylight_minutes": 720,
     "fallback_reason": "offline mode",
     "is_day": 1,
     "latitude": 35.0116,
+    "local_time": "\u2014",
     "longitude": 135.7681,
     "precipitation_mm": 0.0,
+    "relative_humidity": 58,
     "source": "fallback",
+    "sunrise": "06:30",
+    "sunset": "18:30",
     "temperature_c": 12.0,
+    "timezone": "Local time unavailable",
     "weather_code": 2,
     "wind_direction": 225,
     "wind_kph": 10.0

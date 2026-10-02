@@ -2,7 +2,7 @@
 
 > Weather suggests. Models propose. Skyloom decides.
 
-Skyloom publishes one weather-driven generative artwork and poem each day. An open-weight cloud model proposes creative direction; deterministic code breeds and measures four candidates; the strongest becomes tomorrow's champion.
+Skyloom publishes one useful, weather-driven city portrait each day. It combines a scored three-hour outdoor window, a concise city briefing, one sourced fact, and a generative artwork whose color, motion, density, light, and marks directly encode the day's conditions. An open-weight cloud model proposes creative direction; deterministic code breeds and measures four candidates; the strongest becomes tomorrow's champion.
 
 The system uses GitHub Actions, GitHub Pages, Open-Meteo, and `gpt-oss-20b` through Cloudflare Workers AI. It has no always-on server, paid image model, or database.
 
@@ -38,13 +38,13 @@ Open `http://localhost:8000`.
 ## The daily loop
 
 1. Select the day's city.
-2. Read current weather from Open-Meteo.
-3. Ask the open-weight model for a palette, title, poem, and bounded mutation.
-4. Breed champion, director, previous-critic, and explorer candidates.
-5. Score composition, coverage, stroke length, contrast, weather fit, and novelty.
-6. Save the winning recipe.
-7. Let a metrics-only critic propose a challenger for tomorrow.
-8. Rebuild the small recent and monthly archive manifests.
+2. Read current and hourly weather from Open-Meteo.
+3. Score every daylight three-hour block and select the best outdoor window.
+4. Retrieve a sourced city summary and pair it with a curated important fact.
+5. Ask the open-weight model for a palette, title, context line, and bounded mutation.
+6. Breed champion, director, previous-critic, and explorer candidates.
+7. Score composition, coverage, stroke length, contrast, weather fit, and novelty.
+8. Save the winning recipe and rebuild the bounded archive manifests.
 
 If weather or model inference fails, deterministic fallbacks still publish the day's recipe and record the error.
 
@@ -78,6 +78,7 @@ skyloom.json           product and retention configuration
 scripts/setup.sh       idempotent cloud bootstrap
 engine/daily.py        daily orchestration and idempotency
 engine/llm.py          Cloudflare Workers AI calls
+engine/city.py         sourced city briefing and fact fallbacks
 engine/genome.py       bounded style genome and mutation
 engine/score.py        deterministic candidate fitness
 engine/weather.py      Open-Meteo and weather fallbacks
@@ -88,4 +89,4 @@ docs/app.js            browser-side recipe renderer
 docs/data/              bounded public archive indexes
 ```
 
-Weather data is supplied by [Open-Meteo](https://open-meteo.com/) under CC BY 4.0 and is attributed in the gallery.
+Weather data is supplied by [Open-Meteo](https://open-meteo.com/) under CC BY 4.0. City briefings and fact sources link directly to Wikipedia from the interface.

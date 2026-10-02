@@ -9,18 +9,41 @@ from .config import load_config
 def _public_recipe(record: dict) -> dict:
     winner = record["winner"]
     winner_score = record["candidates"][winner]["score"]
+    weather = record["weather"]
+    city_context = record.get("city", {
+        "brief": f"{weather['city']} is today's Skyloom city portrait.",
+        "fact": "A verified city fact will appear on the next live generation.",
+        "source": "https://en.wikipedia.org/",
+        "fact_source": "https://en.wikipedia.org/",
+        "source_label": "Wikipedia",
+    })
     return {
         "date": record["date"],
         "seed": record["date"],
         "title": record["title"],
         "city": record["weather"]["city"],
         "country": record["weather"]["country"],
-        "temperature_c": record["weather"]["temperature_c"],
+        "temperature_c": weather["temperature_c"],
+        "apparent_temperature_c": weather.get("apparent_temperature_c", weather["temperature_c"]),
+        "relative_humidity": weather.get("relative_humidity", 50),
+        "local_time": weather.get("local_time", "—"),
+        "timezone": weather.get("timezone", "local"),
+        "sunrise": weather.get("sunrise", "—"),
+        "sunset": weather.get("sunset", "—"),
+        "daylight_minutes": weather.get("daylight_minutes", 720),
+        "best_window": weather.get("best_window", {
+            "label": "Forecast pending", "score": 0,
+            "reason": "The next live generation will calculate the strongest outdoor window.",
+            "rain_probability": 0, "temperature_c": weather["temperature_c"], "wind_kph": weather["wind_kph"],
+        }),
+        "coordinates": {"latitude": weather["latitude"], "longitude": weather["longitude"]},
+        "city_context": city_context,
         "weather": {
-            "weather_code": record["weather"]["weather_code"],
-            "wind_kph": record["weather"]["wind_kph"],
-            "wind_direction": record["weather"]["wind_direction"],
-            "precipitation_mm": record["weather"]["precipitation_mm"],
+            "weather_code": weather["weather_code"],
+            "cloud_cover": weather.get("cloud_cover", 50),
+            "wind_kph": weather["wind_kph"],
+            "wind_direction": weather["wind_direction"],
+            "precipitation_mm": weather["precipitation_mm"],
         },
         "poem": record["poem"],
         "winner": winner,

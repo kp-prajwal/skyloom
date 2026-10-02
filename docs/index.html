@@ -3,45 +3,148 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Skyloom weaves weather into autonomous generative art.">
-  <title>Skyloom</title>
+  <meta name="description" content="Skyloom turns live city conditions into a measured generative portrait.">
+  <meta name="theme-color" content="#0b0d0e">
+  <title>Skyloom — a living city portrait</title>
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="masthead">
-    <a class="brand" href="#top" aria-label="Skyloom home">
-      <span class="brand-mark">☼</span>
-      <span>Skyloom</span>
+  <header class="topbar">
+    <a class="wordmark" href="#" aria-label="Skyloom home">
+      <svg viewBox="0 0 34 34" aria-hidden="true"><path d="M4 17h26M17 4v26M8 8l18 18M26 8 8 26"/><circle cx="17" cy="17" r="5"/></svg>
+      <span>SKYLOOM</span>
     </a>
-    <p class="status"><span class="pulse"></span> paints once each day</p>
+    <div class="run-state"><i></i><span>DAILY SYSTEM</span><b id="generation-state">GEN —</b></div>
+    <nav aria-label="Skyloom controls">
+      <button class="text-button" id="guide-button" type="button">Guide</button>
+      <button class="text-button" id="archive-button" type="button">Archive</button>
+    </nav>
   </header>
 
-  <main id="top">
-    <section id="hero" class="hero" aria-live="polite">
-      <div class="loading">The studio is opening its shutters…</div>
-    </section>
-
-    <section class="about">
-      <p class="eyebrow">A SMALL AUTONOMOUS STUDIO</p>
-      <h2>The weather suggests.<br>The model proposes.<br>The measurements decide.</h2>
-      <p>Every morning, four mathematical compositions compete. The highest-scoring piece becomes the next generation’s starting point.</p>
-    </section>
-
-    <section class="archive" aria-labelledby="archive-title">
-      <div class="section-heading">
-        <p class="eyebrow">THE ARCHIVE</p>
-        <h2 id="archive-title">Previous mornings</h2>
+  <main class="workspace" id="workspace">
+    <section class="portrait" aria-label="Today's generated city portrait">
+      <canvas id="portrait-canvas" role="img"></canvas>
+      <div class="portrait-shade" aria-hidden="true"></div>
+      <div class="portrait-heading">
+        <p class="kicker" id="portrait-date">LOADING DAILY SIGNAL</p>
+        <h1 id="portrait-title">Skyloom</h1>
+        <p class="coordinates" id="coordinates">—</p>
       </div>
-      <div id="gallery" class="gallery"></div>
-      <button id="load-archive" class="archive-button" type="button" hidden>Load older mornings</button>
+      <button class="inspect-button" id="inspect-button" type="button">
+        <span>Inspect the weave</span><b>→</b>
+      </button>
+      <div class="portrait-signals" aria-label="Visual signal summary">
+        <span><i class="signal-line wind"></i><b id="canvas-wind">—</b> WIND</span>
+        <span><i class="signal-line cloud"></i><b id="canvas-cloud">—</b> CLOUD</span>
+        <span><i class="signal-line light"></i><b id="canvas-light">—</b> DAYLIGHT</span>
+      </div>
     </section>
+
+    <aside class="intelligence" aria-label="City intelligence">
+      <div class="city-header">
+        <div>
+          <p class="kicker">CITY SIGNAL / <span id="city-country">—</span></p>
+          <h2 id="city-name">Loading</h2>
+        </div>
+        <div class="local-clock"><strong id="local-clock">—</strong><span id="timezone">LOCAL</span></div>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="City information">
+        <button role="tab" aria-selected="true" aria-controls="today-panel" id="today-tab" data-tab="today">Today</button>
+        <button role="tab" aria-selected="false" aria-controls="city-panel" id="city-tab" data-tab="city">City / 60 sec</button>
+        <button role="tab" aria-selected="false" aria-controls="decode-panel" id="decode-tab" data-tab="decode">Decode</button>
+      </div>
+
+      <div class="panel-stack">
+        <section class="tab-panel active" id="today-panel" role="tabpanel" aria-labelledby="today-tab">
+          <article class="window-card">
+            <div class="window-score" aria-label="Outdoor window quality"><strong id="window-score">—</strong><span>/100</span></div>
+            <div>
+              <p class="kicker">BEST WINDOW TODAY</p>
+              <h3 id="window-time">Forecast pending</h3>
+              <p id="window-reason">Skyloom is measuring the day.</p>
+            </div>
+          </article>
+
+          <div class="metric-grid" aria-label="Current conditions">
+            <div><span>NOW / FEELS</span><strong id="temperature">—</strong><small id="feels-like">—</small></div>
+            <div><span>WIND</span><strong id="wind-value">—</strong><small id="wind-direction">—</small></div>
+            <div><span>HUMIDITY</span><strong id="humidity">—</strong><small id="weather-state">—</small></div>
+            <div><span>SUNSET</span><strong id="sunset">—</strong><small id="daylight">—</small></div>
+          </div>
+
+          <article class="fact-card">
+            <p class="kicker">ONE IMPORTANT FACT</p>
+            <p id="city-fact">Loading a verified city fact…</p>
+            <a id="fact-source" href="https://en.wikipedia.org/" target="_blank" rel="noreferrer">Source ↗</a>
+          </article>
+        </section>
+
+        <section class="tab-panel" id="city-panel" role="tabpanel" aria-labelledby="city-tab" hidden>
+          <div class="map-frame">
+            <svg id="city-map" viewBox="0 0 800 380" role="img" aria-label="World map showing the selected city">
+              <g id="map-grid" aria-hidden="true"></g>
+              <g id="map-land" aria-hidden="true"></g>
+              <g id="map-marker"></g>
+            </svg>
+            <span id="map-label">—</span>
+          </div>
+          <article class="city-brief">
+            <p class="kicker">THE CITY IN 60 SECONDS</p>
+            <p id="city-brief">Loading verified city context…</p>
+            <a id="city-source" href="https://en.wikipedia.org/" target="_blank" rel="noreferrer">Read the source ↗</a>
+          </article>
+        </section>
+
+        <section class="tab-panel" id="decode-panel" role="tabpanel" aria-labelledby="decode-tab" hidden>
+          <div class="decoder-intro">
+            <p class="kicker">THE PORTRAIT IS A DATA DISPLAY</p>
+            <h3>Nothing on the canvas is arbitrary.</h3>
+          </div>
+          <dl class="decoder-list">
+            <div><dt><i class="decoder-mark temperature-mark"></i>Temperature</dt><dd><span>sets the color temperature</span><b id="decode-temperature">—</b></dd></div>
+            <div><dt><i class="decoder-mark wind-mark"></i>Wind</dt><dd><span>sets stroke angle and curl</span><b id="decode-wind">—</b></dd></div>
+            <div><dt><i class="decoder-mark cloud-mark"></i>Cloud</dt><dd><span>sets density and opacity</span><b id="decode-cloud">—</b></dd></div>
+            <div><dt><i class="decoder-mark sun-mark"></i>Sunlight</dt><dd><span>positions the primary glow</span><b id="decode-sun">—</b></dd></div>
+            <div><dt><i class="decoder-mark rain-mark"></i>Precipitation</dt><dd><span>adds directional marks</span><b id="decode-rain">—</b></dd></div>
+          </dl>
+          <p class="selection-note" id="selection-note">Four candidate systems rendered. Code measured each one and selected the strongest.</p>
+        </section>
+      </div>
+
+      <div class="action-bar">
+        <button id="download-button" type="button">Download portrait</button>
+        <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Weather · Open-Meteo ↗</a>
+        <span>Recipe <b id="recipe-size">—</b></span>
+        <span>Fitness <b id="fitness">—</b></span>
+      </div>
+    </aside>
   </main>
 
-  <footer>
-    <p>Weather data by <a href="https://open-meteo.com/" rel="noreferrer">Open-Meteo</a>.</p>
-    <p>Weather suggests. Models propose. Skyloom decides.</p>
-  </footer>
+  <dialog id="guide-dialog" class="guide-dialog">
+    <form method="dialog">
+      <button class="close-button" value="close" aria-label="Close guide">×</button>
+      <p class="kicker">WELCOME TO SKYLOOM</p>
+      <h2>A city, translated into a living visual system.</h2>
+      <div class="guide-steps">
+        <div><b>01</b><p><strong>Use the day.</strong> Skyloom finds the strongest three-hour outdoor window from the hourly forecast.</p></div>
+        <div><b>02</b><p><strong>Read the city.</strong> A restrained map, concise briefing, and sourced fact add context without noise.</p></div>
+        <div><b>03</b><p><strong>Decode the art.</strong> Wind, cloud, temperature, light, and rain directly shape the portrait.</p></div>
+      </div>
+      <button class="enter-button" value="close">Enter Skyloom</button>
+    </form>
+  </dialog>
+
+  <aside class="archive-drawer" id="archive-drawer" aria-hidden="true" aria-label="Skyloom archive">
+    <div class="drawer-header">
+      <div><p class="kicker">RECIPE ARCHIVE</p><h2>Previous cities</h2></div>
+      <button class="close-button" id="archive-close" type="button" aria-label="Close archive">×</button>
+    </div>
+    <div class="archive-list" id="archive-list"></div>
+  </aside>
+  <div class="drawer-scrim" id="drawer-scrim" hidden></div>
+
   <script src="app.js" defer></script>
 </body>
 </html>

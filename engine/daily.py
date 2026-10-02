@@ -7,6 +7,7 @@ from pathlib import Path
 import sys
 
 from . import llm
+from .city import city_context
 from .config import load_config
 from .gallery import rebuild
 from .genome import DEFAULT_GENOME, clamp_deltas, clamp_genome, explore, mutate, stable_seed
@@ -67,6 +68,10 @@ def run(day: date, offline: bool = False, force: bool = False) -> dict:
             errors.append({"component": "weather", "message": str(exc)[:240]})
             weather = fallback_weather(city, str(exc)[:160])
 
+    context = city_context(city, offline=offline)
+    if context.get("source_error"):
+        errors.append({"component": "city", "message": context["source_error"]})
+
     champion_state = read_json(ROOT / "data" / "champion.json", {})
     champion = clamp_genome(champion_state.get("genome", DEFAULT_GENOME))
     previous_critic = champion_state.get("critic_mutation", {})
@@ -80,7 +85,7 @@ def run(day: date, offline: bool = False, force: bool = False) -> dict:
     if not offline and CONFIG["model"]["director_enabled"] and llm.available():
         try:
             direction = sanitize_direction(
-                llm.direct(weather, champion, recent_records, stable_seed(day_key)), fallback
+                llm.direct(weather, context, champion, recent_records, stable_seed(day_key)), fallback
             )
         except Exception as exc:
             errors.append({"component": "director", "message": str(exc)[:240]})
@@ -124,6 +129,7 @@ def run(day: date, offline: bool = False, force: bool = False) -> dict:
         "poem": direction["poem"],
         "palette": direction["palette"],
         "weather": weather,
+        "city": context,
         "direction_source": direction["source"],
         "direction_rationale": direction["rationale"],
         "candidates": public_candidates,

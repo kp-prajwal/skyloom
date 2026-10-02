@@ -53,6 +53,14 @@
       }
     }
   },
+  "city": {
+    "brief": "Reykjav\u00edk is Iceland's capital and largest city, set on Faxafl\u00f3i bay amid a landscape shaped by glaciers, geothermal heat, and the North Atlantic.",
+    "fact": "Reykjav\u00edk is the world's northernmost capital of a sovereign state.",
+    "fact_source": "https://en.wikipedia.org/wiki/Reykjav%C3%ADk",
+    "source": "https://en.wikipedia.org/wiki/Reykjav%C3%ADk",
+    "source_label": "Wikipedia",
+    "source_status": "curated-fallback"
+  },
   "critique": {
     "mutation": {
       "opacity": 0.008,
@@ -78,16 +86,33 @@
   ],
   "title": "First Light over Reykjavik",
   "weather": {
+    "apparent_temperature_c": 11.0,
+    "best_window": {
+      "end": "18:00",
+      "label": "3\u20136 PM",
+      "rain_probability": 10,
+      "reason": "A mild, mostly dry three-hour stretch with manageable wind.",
+      "score": 72,
+      "start": "15:00",
+      "temperature_c": 12.0,
+      "wind_kph": 10.0
+    },
     "city": "Reykjavik",
     "cloud_cover": 45,
     "country": "IS",
+    "daylight_minutes": 720,
     "fallback_reason": "offline mode",
     "is_day": 1,
     "latitude": 64.1466,
+    "local_time": "\u2014",
     "longitude": -21.9426,
     "precipitation_mm": 0.0,
+    "relative_humidity": 58,
     "source": "fallback",
+    "sunrise": "06:30",
+    "sunset": "18:30",
     "temperature_c": 12.0,
+    "timezone": "Local time unavailable",
     "weather_code": 2,
     "wind_direction": 225,
     "wind_kph": 10.0

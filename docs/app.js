@@ -1,13 +1,28 @@
-const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, ch => ({
+const $ = selector => document.querySelector(selector);
+const $$ = selector => [...document.querySelectorAll(selector)];
+const safeText = value => String(value ?? '—');
+const escapeHtml = value => safeText(value).replace(/[&<>'"]/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
-}[ch]));
+}[char]));
+
+let currentDay = null;
+let recentDays = [];
+let archiveLoaded = false;
 
 function weatherLabel(code) {
-  if ([45, 48].includes(code)) return 'Fog';
-  if ((code >= 71 && code <= 77) || [85, 86].includes(code)) return 'Snow';
-  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return 'Rain';
-  if (code >= 1 && code <= 3) return 'Cloud';
-  return 'Clear';
+  const value = Number(code);
+  if (value === 0) return 'Clear';
+  if ([45, 48].includes(value)) return 'Fog';
+  if ((value >= 71 && value <= 77) || [85, 86].includes(value)) return 'Snow';
+  if ((value >= 51 && value <= 67) || (value >= 80 && value <= 82)) return 'Rain';
+  if (value >= 1 && value <= 3) return 'Cloud';
+  if (value >= 95) return 'Storm';
+  return 'Variable';
+}
+
+function compass(degrees) {
+  const points = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  return points[Math.round(((Number(degrees) % 360) / 45)) % 8];
 }
 
 function seedNumber(text) {
@@ -30,8 +45,24 @@ function randomGenerator(seed) {
   };
 }
 
+function minutesFromClock(value) {
+  const match = String(value || '').match(/(\d{1,2}):(\d{2})/);
+  return match ? Number(match[1]) * 60 + Number(match[2]) : null;
+}
+
+function sunPosition(recipe) {
+  const now = minutesFromClock(recipe.local_time);
+  const sunrise = minutesFromClock(recipe.sunrise);
+  const sunset = minutesFromClock(recipe.sunset);
+  if (now === null || sunrise === null || sunset === null || sunset <= sunrise) {
+    return { progress: Number(recipe.genome.light_x), daylight: true };
+  }
+  const progress = Math.max(0, Math.min(1, (now - sunrise) / (sunset - sunrise)));
+  return { progress, daylight: now >= sunrise && now <= sunset };
+}
+
 function renderRecipe(canvas, recipe, thumbnail = false) {
-  const size = 896;
+  const size = thumbnail ? 360 : 896;
   canvas.width = size;
   canvas.height = size;
   const context = canvas.getContext('2d');
@@ -39,6 +70,10 @@ function renderRecipe(canvas, recipe, thumbnail = false) {
   const palette = recipe.palette;
   const weather = recipe.weather;
   const random = randomGenerator(recipe.seed);
+  const temperature = Number(recipe.temperature_c);
+  const cloud = Math.max(0, Math.min(100, Number(weather.cloud_cover ?? 50)));
+  const wind = Math.max(0, Number(weather.wind_kph || 0));
+  const sun = sunPosition(recipe);
 
   const sky = context.createLinearGradient(0, 0, 0, size);
   sky.addColorStop(0, palette[0]);
@@ -47,20 +82,31 @@ function renderRecipe(canvas, recipe, thumbnail = false) {
   context.fillStyle = sky;
   context.fillRect(0, 0, size, size);
 
-  const lightX = Number(genome.light_x) * size;
-  const lightY = Number(genome.light_y) * size;
-  const glow = context.createRadialGradient(lightX, lightY, 2, lightX, lightY, 210);
+  context.globalCompositeOperation = 'soft-light';
+  context.fillStyle = temperature >= 22
+    ? `rgba(244,113,55,${Math.min(.24, (temperature - 18) / 70)})`
+    : `rgba(75,143,212,${Math.min(.24, (18 - temperature) / 70)})`;
+  context.fillRect(0, 0, size, size);
+  context.globalCompositeOperation = 'source-over';
+
+  const lightX = (.14 + sun.progress * .72) * size;
+  const arc = Math.sin(Math.PI * sun.progress);
+  const lightY = (sun.daylight ? .62 - arc * .42 : .68) * size;
+  const glow = context.createRadialGradient(lightX, lightY, 2, lightX, lightY, size * .25);
   glow.addColorStop(0, `${palette[3]}ee`);
   glow.addColorStop(1, `${palette[3]}00`);
   context.fillStyle = glow;
   context.fillRect(0, 0, size, size);
 
-  const count = thumbnail ? Math.min(Number(genome.stroke_count), 320) : Number(genome.stroke_count);
+  const baseCount = thumbnail ? Math.min(Number(genome.stroke_count), 320) : Number(genome.stroke_count);
+  const count = Math.round(baseCount * (.7 + cloud / 200));
   const horizonY = Number(genome.horizon) * size;
+  const windAngle = (Number(weather.wind_direction || 0) - 90) * Math.PI / 180;
+  const windPull = Math.min(.45, .12 + wind / 125);
   context.lineCap = 'round';
   for (let index = 0; index < count; index += 1) {
     let x = -40 + random() * (size + 80);
-    let y = horizonY * 0.32 + random() * (size + 30 - horizonY * 0.32);
+    let y = horizonY * .32 + random() * (size + 30 - horizonY * .32);
     const phase = random() * Math.PI * 2;
     context.beginPath();
     context.moveTo(x, y);
@@ -68,42 +114,42 @@ function renderRecipe(canvas, recipe, thumbnail = false) {
       const scale = Number(genome.flow_scale);
       const field = Math.sin((x + phase * 40) * scale * 1.7)
         + Math.cos((y - phase * 25) * scale * 1.15)
-        + 0.55 * Math.sin((x + y) * scale * 0.62 + phase);
-      const pull = Math.atan2(lightY - y, lightX - x) * 0.075;
-      const angle = field * Number(genome.curl) + pull - 0.42;
-      const stride = Number(genome.step_length) * (0.82 + random() * 0.35);
+        + .55 * Math.sin((x + y) * scale * .62 + phase);
+      const lightPull = Math.atan2(lightY - y, lightX - x) * .07;
+      const angle = field * Number(genome.curl) * (1 + wind / 80) + lightPull + windAngle * windPull;
+      const stride = Number(genome.step_length) * (.82 + random() * .35);
       x += Math.cos(angle) * stride;
       y += Math.sin(angle) * stride;
       context.lineTo(x, y);
     }
     context.strokeStyle = palette[1 + (index % 3)];
-    context.lineWidth = Number(genome.stroke_width) * (0.72 + random() * 0.63);
-    context.globalAlpha = Number(genome.opacity) * (0.72 + random() * 0.36);
+    context.lineWidth = Number(genome.stroke_width) * (.72 + random() * .63);
+    context.globalAlpha = Number(genome.opacity) * (.65 + cloud / 250) * (.72 + random() * .36);
     context.stroke();
   }
   context.globalAlpha = 1;
-  renderWeather(context, weather, palette, random, size);
+  renderPrecipitation(context, weather, palette, random, size);
 }
 
-function renderWeather(context, weather, palette, random, size) {
+function renderPrecipitation(context, weather, palette, random, size) {
   const code = Number(weather.weather_code);
   if ((code >= 71 && code <= 77) || [85, 86].includes(code)) {
     context.fillStyle = palette[3];
-    for (let i = 0; i < 90; i += 1) {
-      context.globalAlpha = 0.5;
+    for (let index = 0; index < 90; index += 1) {
+      context.globalAlpha = .5;
       context.beginPath();
-      context.arc(random() * size, random() * size, 0.8 + random() * 2.6, 0, Math.PI * 2);
+      context.arc(random() * size, random() * size, .8 + random() * 2.6, 0, Math.PI * 2);
       context.fill();
     }
   } else if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) {
     const angle = (Number(weather.wind_direction) - 90) * Math.PI / 180;
     context.strokeStyle = palette[3];
-    context.lineWidth = 1.2;
-    context.globalAlpha = 0.25;
-    for (let i = 0; i < 115; i += 1) {
+    context.lineWidth = Math.max(1, size / 750);
+    context.globalAlpha = .28;
+    for (let index = 0; index < 115; index += 1) {
       const x = random() * size;
       const y = random() * size;
-      const length = 9 + random() * 19;
+      const length = size * (.01 + random() * .022);
       context.beginPath();
       context.moveTo(x, y);
       context.lineTo(x + Math.cos(angle) * length, y + Math.sin(angle) * length);
@@ -111,95 +157,234 @@ function renderWeather(context, weather, palette, random, size) {
     }
   } else if ([45, 48].includes(code)) {
     context.fillStyle = '#dbe3e6';
-    context.globalAlpha = 0.22;
+    context.globalAlpha = .2;
     context.fillRect(0, 0, size, size);
   }
   context.globalAlpha = 1;
 }
 
-function heroTemplate(day) {
-  const poem = day.poem.map(line => `<p>${escapeHtml(line)}</p>`).join('');
-  return `
-    <div class="hero-art"><canvas id="hero-canvas" role="img" aria-label="${escapeHtml(day.title)}"></canvas></div>
-    <div class="hero-copy">
-      <p class="eyebrow">${escapeHtml(day.date)} · GENERATION WINNER</p>
-      <h1>${escapeHtml(day.title)}</h1>
-      <p class="place">${escapeHtml(day.city)}, ${escapeHtml(day.country)}</p>
-      <div class="poem">${poem}</div>
-      <div class="metadata">
-        <span><strong>${Number(day.temperature_c).toFixed(1)}°C</strong>temperature</span>
-        <span><strong>${weatherLabel(day.weather.weather_code)}</strong>sky</span>
-        <span><strong>${Number(day.score).toFixed(2)}</strong>fitness / 10</span>
-        <span><strong>${escapeHtml(day.winner)}</strong>candidate</span>
-      </div>
-      <button class="speak" type="button">Listen to the poem</button>
-    </div>`;
+function formatDate(date) {
+  const parsed = new Date(`${date}T12:00:00`);
+  return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' }).format(parsed).toUpperCase();
 }
 
-const renderedDates = new Set();
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const canvas = entry.target;
-    renderRecipe(canvas, canvas.recipe, true);
-    observer.unobserve(canvas);
-  });
-}, { rootMargin: '300px' });
+function setLink(selector, url) {
+  const element = $(selector);
+  try {
+    const parsed = new URL(url);
+    element.href = parsed.protocol === 'https:' ? parsed.href : 'https://en.wikipedia.org/';
+  } catch (_) {
+    element.href = 'https://en.wikipedia.org/';
+  }
+}
 
-function appendCards(days) {
-  const gallery = document.querySelector('#gallery');
-  days.forEach(day => {
-    if (renderedDates.has(day.date)) return;
-    renderedDates.add(day.date);
-    const card = document.createElement('article');
-    card.className = 'card';
-    card.innerHTML = `<canvas role="img" aria-label="${escapeHtml(day.title)}"></canvas>
-      <div class="card-copy"><h3>${escapeHtml(day.title)}</h3>
-      <p>${escapeHtml(day.city)} · ${escapeHtml(day.date)} · ${Number(day.score).toFixed(2)}</p></div>`;
-    const canvas = card.querySelector('canvas');
-    canvas.recipe = day;
-    observer.observe(canvas);
-    gallery.appendChild(card);
+function coordinateLabel(coordinates) {
+  const lat = Number(coordinates?.latitude || 0);
+  const lon = Number(coordinates?.longitude || 0);
+  return `${Math.abs(lat).toFixed(4)}° ${lat >= 0 ? 'N' : 'S'}  /  ${Math.abs(lon).toFixed(4)}° ${lon >= 0 ? 'E' : 'W'}`;
+}
+
+function readableClock(value) {
+  const match = String(value || '').match(/(\d{2}):(\d{2})/);
+  if (!match) return '—';
+  const hour = Number(match[1]);
+  return `${hour % 12 || 12}:${match[2]} ${hour < 12 ? 'AM' : 'PM'}`;
+}
+
+function daylightLabel(minutes) {
+  const value = Number(minutes || 0);
+  return `${Math.floor(value / 60)}H ${value % 60}M LIGHT`;
+}
+
+function showDay(day) {
+  currentDay = day;
+  renderRecipe($('#portrait-canvas'), day);
+  const weather = day.weather;
+  const context = day.city_context || {};
+  const windowData = day.best_window || {};
+  $('#portrait-date').textContent = `${formatDate(day.date)} / GENERATION ${String(day.winner || 'A').toUpperCase()}`;
+  $('#portrait-title').textContent = day.title;
+  $('#coordinates').textContent = coordinateLabel(day.coordinates);
+  $('#generation-state').textContent = `GEN ${day.date.replaceAll('-', '.')}`;
+  $('#city-country').textContent = day.country;
+  $('#city-name').textContent = day.city;
+  $('#local-clock').textContent = readableClock(day.local_time);
+  $('#timezone').textContent = day.timezone || 'LOCAL';
+
+  $('#window-score').textContent = Math.round(Number(windowData.score || 0));
+  $('#window-time').textContent = windowData.label || 'Forecast pending';
+  $('#window-reason').textContent = windowData.reason || 'The next run will calculate the strongest outdoor window.';
+  $('#temperature').textContent = `${Number(day.temperature_c).toFixed(1)}°`;
+  $('#feels-like').textContent = `FEELS ${Number(day.apparent_temperature_c ?? day.temperature_c).toFixed(1)}°C`;
+  $('#wind-value').textContent = `${Number(weather.wind_kph).toFixed(0)} km/h`;
+  $('#wind-direction').textContent = `${compass(weather.wind_direction)} / ${Math.round(Number(weather.wind_direction))}°`;
+  $('#humidity').textContent = `${Math.round(Number(day.relative_humidity ?? 0))}%`;
+  $('#weather-state').textContent = weatherLabel(weather.weather_code);
+  $('#sunset').textContent = readableClock(day.sunset);
+  $('#daylight').textContent = daylightLabel(day.daylight_minutes);
+
+  $('#city-fact').textContent = context.fact || 'A verified city fact will appear on the next generation.';
+  $('#city-brief').textContent = context.brief || `${day.city} is today’s selected Skyloom city.`;
+  setLink('#fact-source', context.fact_source || context.source);
+  setLink('#city-source', context.source);
+
+  $('#canvas-wind').textContent = `${Number(weather.wind_kph).toFixed(0)} KM/H`;
+  $('#canvas-cloud').textContent = `${Math.round(Number(weather.cloud_cover ?? 0))}%`;
+  $('#canvas-light').textContent = `${Math.round(Number(day.daylight_minutes || 0) / 60)} HRS`;
+  $('#decode-temperature').textContent = `${Number(day.temperature_c).toFixed(1)}°C`;
+  $('#decode-wind').textContent = `${compass(weather.wind_direction)} ${Math.round(Number(weather.wind_kph))} KM/H`;
+  $('#decode-cloud').textContent = `${Math.round(Number(weather.cloud_cover ?? 0))}% COVER`;
+  $('#decode-sun').textContent = `${readableClock(day.sunrise)} → ${readableClock(day.sunset)}`;
+  $('#decode-rain').textContent = `${Number(weather.precipitation_mm || 0).toFixed(1)} MM`;
+  $('#selection-note').textContent = `Four candidate systems rendered. ${safeText(day.winner).toUpperCase()} scored ${Number(day.score).toFixed(2)}/10 and became today’s portrait.`;
+  const bytes = new Blob([JSON.stringify(day)]).size;
+  $('#recipe-size').textContent = `${(bytes / 1024).toFixed(1)} KB`;
+  $('#fitness').textContent = `${Number(day.score).toFixed(2)} / 10`;
+  renderMap(day);
+}
+
+const LAND = [
+  [[-168,72],[-128,72],[-102,58],[-82,50],[-52,49],[-59,24],[-83,10],[-105,20],[-123,39],[-143,57]],
+  [[-82,12],[-67,8],[-48,-2],[-35,-22],[-52,-56],[-70,-50],[-80,-18]],
+  [[-10,72],[32,72],[45,58],[74,54],[104,72],[150,62],[178,50],[145,26],[113,16],[88,7],[54,23],[32,36],[8,37],[-10,55]],
+  [[-17,36],[12,37],[36,28],[52,10],[39,-35],[18,-35],[2,-25],[-12,4]],
+  [[112,-11],[154,-10],[153,-39],[128,-44],[113,-26]],
+  [[-52,83],[-18,80],[-26,63],[-48,60]],
+  [[44,-13],[51,-16],[49,-26],[43,-24]],
+  [[130,34],[145,43],[142,27]]
+];
+
+function projectPoint([longitude, latitude]) {
+  return [((longitude + 180) / 360) * 800, ((90 - latitude) / 180) * 380];
+}
+
+function renderMap(day) {
+  const grid = $('#map-grid');
+  const land = $('#map-land');
+  const marker = $('#map-marker');
+  grid.innerHTML = [...Array(7)].map((_, index) => `<line x1="${(index + 1) * 100}" y1="0" x2="${(index + 1) * 100}" y2="380"/>`).join('')
+    + [...Array(3)].map((_, index) => `<line x1="0" y1="${(index + 1) * 95}" x2="800" y2="${(index + 1) * 95}"/>`).join('');
+  land.innerHTML = LAND.map(polygon => `<polygon points="${polygon.map(point => projectPoint(point).join(',')).join(' ')}"/>`).join('');
+  const [x, y] = projectPoint([Number(day.coordinates.longitude), Number(day.coordinates.latitude)]);
+  marker.innerHTML = `<circle class="marker-halo" cx="${x}" cy="${y}" r="12"><animate attributeName="r" values="8;17;8" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;.15;.8" dur="3s" repeatCount="indefinite"/></circle><circle class="marker-core" cx="${x}" cy="${y}" r="3.5"/>`;
+  $('#map-label').textContent = `${day.city} / ${coordinateLabel(day.coordinates)}`;
+}
+
+function activateTab(name, focus = false) {
+  $$('.tabs button').forEach(button => {
+    const active = button.dataset.tab === name;
+    button.setAttribute('aria-selected', String(active));
+    button.tabIndex = active ? 0 : -1;
+    const panel = $(`#${button.dataset.tab}-panel`);
+    panel.hidden = !active;
+    panel.classList.toggle('active', active);
+    if (active && focus) button.focus();
   });
+}
+
+function openArchive() {
+  $('#archive-drawer').classList.add('open');
+  $('#archive-drawer').setAttribute('aria-hidden', 'false');
+  $('#drawer-scrim').hidden = false;
+  document.body.style.overflow = 'hidden';
+  if (!archiveLoaded) loadArchive();
+}
+
+function closeArchive() {
+  $('#archive-drawer').classList.remove('open');
+  $('#archive-drawer').setAttribute('aria-hidden', 'true');
+  $('#drawer-scrim').hidden = true;
+  document.body.style.overflow = '';
+}
+
+function archiveCard(day) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'archive-item';
+  button.innerHTML = `<canvas aria-hidden="true"></canvas><span><strong>${escapeHtml(day.title)}</strong>${escapeHtml(day.city)} · ${escapeHtml(formatDate(day.date))}</span>`;
+  renderRecipe(button.querySelector('canvas'), day, true);
+  button.addEventListener('click', () => {
+    showDay(day);
+    activateTab('today');
+    closeArchive();
+  });
+  return button;
 }
 
 async function loadArchive() {
-  const button = document.querySelector('#load-archive');
-  button.disabled = true;
-  const months = await fetch('data/archive-index.json', { cache: 'no-store' }).then(response => response.json());
-  for (const month of months) {
-    const days = await fetch(`data/archive/${month}.json`, { cache: 'no-store' }).then(response => response.json());
-    appendCards(days);
+  const list = $('#archive-list');
+  list.textContent = 'Loading the recipe archive…';
+  try {
+    const monthsResponse = await fetch('data/archive-index.json', { cache: 'no-store' });
+    if (!monthsResponse.ok) throw new Error('Archive index unavailable');
+    const months = await monthsResponse.json();
+    const pages = await Promise.all(months.map(async month => {
+      const response = await fetch(`data/archive/${month}.json`, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Archive ${month} unavailable`);
+      return response.json();
+    }));
+    const unique = new Map();
+    [...recentDays, ...pages.flat()].forEach(day => unique.set(day.date, day));
+    list.textContent = '';
+    [...unique.values()].sort((a, b) => b.date.localeCompare(a.date)).forEach(day => list.appendChild(archiveCard(day)));
+    if (!list.children.length) list.textContent = 'The first portrait will appear after Skyloom runs.';
+    archiveLoaded = true;
+  } catch (error) {
+    list.textContent = `Archive unavailable: ${error.message}`;
   }
-  button.hidden = true;
 }
 
-fetch('data/recent.json', { cache: 'no-store' })
-  .then(response => {
-    if (!response.ok) throw new Error('Gallery unavailable');
-    return response.json();
-  })
-  .then(days => {
-    if (!days.length) throw new Error('No mornings yet');
-    const [latest, ...archive] = days;
-    document.querySelector('#hero').innerHTML = heroTemplate(latest);
-    renderRecipe(document.querySelector('#hero-canvas'), latest);
-    renderedDates.add(latest.date);
-    appendCards(archive);
-    document.querySelector('#load-archive').hidden = days.length < 90;
-    document.querySelector('.speak').addEventListener('click', () => {
-      speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(`${latest.title}. ${latest.poem.join(' ')}`);
-      utterance.rate = 0.88;
-      speechSynthesis.speak(utterance);
-    });
-  })
-  .catch(error => {
-    document.querySelector('#hero').innerHTML = `<p class="empty">${escapeHtml(error.message)}. Run Skyloom once to begin.</p>`;
-  });
+function downloadPortrait() {
+  if (!currentDay) return;
+  const canvas = $('#portrait-canvas');
+  canvas.toBlob(blob => {
+    const link = document.createElement('a');
+    link.download = `skyloom-${currentDay.city.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${currentDay.date}.png`;
+    link.href = URL.createObjectURL(blob);
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  }, 'image/png');
+}
 
-document.querySelector('#load-archive').addEventListener('click', () => {
-  loadArchive().catch(error => {
-    document.querySelector('#load-archive').textContent = `Could not load archive: ${error.message}`;
+function bindInteractions() {
+  $$('.tabs button').forEach((button, index, buttons) => {
+    button.addEventListener('click', () => activateTab(button.dataset.tab));
+    button.addEventListener('keydown', event => {
+      if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      event.preventDefault();
+      const next = event.key === 'ArrowRight' ? (index + 1) % buttons.length : (index + buttons.length - 1) % buttons.length;
+      activateTab(buttons[next].dataset.tab, true);
+    });
   });
-});
+  $('#inspect-button').addEventListener('click', () => activateTab('decode', true));
+  $('#portrait-canvas').addEventListener('dblclick', () => activateTab('decode', true));
+  $('#guide-button').addEventListener('click', () => $('#guide-dialog').showModal());
+  $('#archive-button').addEventListener('click', openArchive);
+  $('#archive-close').addEventListener('click', closeArchive);
+  $('#drawer-scrim').addEventListener('click', closeArchive);
+  $('#download-button').addEventListener('click', downloadPortrait);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && $('#archive-drawer').classList.contains('open')) closeArchive();
+  });
+}
+
+async function initialise() {
+  bindInteractions();
+  if (!sessionStorage.getItem('skyloom-guide-seen')) {
+    $('#guide-dialog').showModal();
+    sessionStorage.setItem('skyloom-guide-seen', 'true');
+  }
+  try {
+    const response = await fetch('data/recent.json', { cache: 'no-store' });
+    if (!response.ok) throw new Error('Daily signal unavailable');
+    recentDays = await response.json();
+    if (!recentDays.length) throw new Error('No portraits yet');
+    showDay(recentDays[0]);
+  } catch (error) {
+    $('#portrait-title').textContent = 'Signal offline';
+    $('#portrait-date').textContent = error.message.toUpperCase();
+    $('#window-reason').textContent = 'Run Skyloom once to create the first city portrait.';
+  }
+}
+
+initialise();
