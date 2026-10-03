@@ -1,0 +1,133 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 8.497,
+          "contrast": 10.0,
+          "coverage": 6.494,
+          "novelty": 0.0,
+          "stroke_length": 9.675,
+          "weather_fit": 9.858
+        },
+        "total": 7.764
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 8.497,
+          "contrast": 10.0,
+          "coverage": 6.494,
+          "novelty": 0.609,
+          "stroke_length": 9.675,
+          "weather_fit": 9.858
+        },
+        "total": 7.837
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 8.497,
+          "contrast": 10.0,
+          "coverage": 6.235,
+          "novelty": 0.61,
+          "stroke_length": 9.675,
+          "weather_fit": 9.28
+        },
+        "total": 7.687
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 7.036,
+          "contrast": 10.0,
+          "coverage": 6.487,
+          "novelty": 2.319,
+          "stroke_length": 9.083,
+          "weather_fit": 9.858
+        },
+        "total": 7.631
+      }
+    }
+  },
+  "city": {
+    "brief": "Mumbai, also known as Bombay, is the capital city of the Indian state of Maharashtra and the financial capital of India. Located on the Konkan coast along the west coast of India, it has a deep natural harbour.",
+    "continent": "Asia",
+    "country_name": "India",
+    "fact": "Mumbai developed from seven islands that were joined through major land-reclamation projects.",
+    "fact_source": "https://en.wikipedia.org/wiki/Seven_Islands_of_Bombay",
+    "known_for": "cinema, finance, street food, design, and the Arabian Sea",
+    "landmark": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Mumbai_03-2016_30_Gateway_of_India.jpg/330px-Mumbai_03-2016_30_Gateway_of_India.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Gateway of India",
+      "source": "https://en.wikipedia.org/wiki/Gateway_of_India"
+    },
+    "person": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/The_cricket_legend_Sachin_Tendulkar_at_the_Oval_Maidan_in_Mumbai_During_the_Duke_and_Duchess_of_Cambridge_Visit%2826271019082%29.jpg/330px-The_cricket_legend_Sachin_Tendulkar_at_the_Oval_Maidan_in_Mumbai_During_the_Duke_and_Duchess_of_Cambridge_Visit%2826271019082%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Sachin Tendulkar",
+      "source": "https://en.wikipedia.org/wiki/Sachin_Tendulkar"
+    },
+    "source": "https://en.wikipedia.org/wiki/Mumbai",
+    "source_label": "Wikipedia",
+    "source_status": "live"
+  },
+  "critique": {
+    "mutation": {
+      "flow_scale": 0.0005,
+      "horizon": -0.01
+    },
+    "source": "fallback",
+    "verdict": "The measured novelty score has the clearest room to improve."
+  },
+  "date": "2026-09-29",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [],
+  "palette": [
+    "#23203d",
+    "#d56d4b",
+    "#f2b866",
+    "#fff0bf"
+  ],
+  "sample": true,
+  "title": "Mumbai, India",
+  "weather": {
+    "apparent_temperature_c": 28,
+    "city": "Mumbai",
+    "cloud_cover": 67,
+    "country": "IN",
+    "country_name": "India",
+    "daylight_minutes": 720,
+    "fallback_reason": "offline mode",
+    "is_day": 1,
+    "latitude": 19.076,
+    "local_time": "\u2014",
+    "longitude": 72.8777,
+    "precipitation_mm": 0.0,
+    "relative_humidity": 58,
+    "source": "fallback",
+    "sunrise": "06:30",
+    "sunset": "18:30",
+    "temperature_c": 28,
+    "timezone": "Local time unavailable",
+    "weather_code": 2,
+    "wind_direction": 225,
+    "wind_kph": 18
+  },
+  "winner": "critic",
+  "winning_genome": {
+    "curl": 1.17589,
+    "flow_scale": 0.00983,
+    "horizon": 0.54298,
+    "light_x": 0.71021,
+    "light_y": 0.35375,
+    "opacity": 0.28089,
+    "step_length": 7.78852,
+    "steps": 25,
+    "stroke_count": 499,
+    "stroke_width": 1.35
+  }
+}

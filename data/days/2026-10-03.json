@@ -55,8 +55,21 @@
   },
   "city": {
     "brief": "Nairobi, is the capital and largest city of Kenya, located in the south-central part of the country. As of 2026, it has a population of 5.6 million and a metropolitan population of 15.95 million, making it the 8th most populous city in Africa and the 4th most populous metropolitan area. The city goes beyond its borders and has expanded into neighbouring counties, making it the 4th largest metropolitan area in Africa.",
+    "continent": "Africa",
+    "country_name": "Kenya",
     "fact": "The name Nairobi comes from the Maasai phrase Enkare Nairobi, commonly translated as \u201cplace of cool waters.\u201d",
     "fact_source": "https://en.wikipedia.org/wiki/Nairobi",
+    "known_for": "diplomacy, technology, wildlife, and East African culture",
+    "landmark": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/Lions_of_Kenya_02.jpg/330px-Lions_of_Kenya_02.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Nairobi National Park",
+      "source": "https://en.wikipedia.org/wiki/Nairobi_National_Park"
+    },
+    "person": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Wangari_Maathai_in_2001.jpg/330px-Wangari_Maathai_in_2001.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Wangari Maathai",
+      "source": "https://en.wikipedia.org/wiki/Wangar%C4%A9_Maathai"
+    },
     "source": "https://en.wikipedia.org/wiki/Nairobi",
     "source_label": "Wikipedia",
     "source_status": "live"
@@ -88,27 +101,13 @@
     "#f2b866",
     "#fff0bf"
   ],
-  "poem": [
-    "Above Nairobi, warm light gathers at the roofs,",
-    "the wind carries one color into another,",
-    "and morning begins before anyone asks it to."
-  ],
-  "title": "First Light over Nairobi",
+  "title": "Nairobi, Kenya",
   "weather": {
     "apparent_temperature_c": 22.5,
-    "best_window": {
-      "end": "11:00",
-      "label": "8:00 AM\u201311:00 AM",
-      "rain_probability": 14,
-      "reason": "The strongest outdoor window: dry, calm, with 14% average rain probability.",
-      "score": 90,
-      "start": "08:00",
-      "temperature_c": 19.5,
-      "wind_kph": 9.4
-    },
     "city": "Nairobi",
     "cloud_cover": 2,
     "country": "KE",
+    "country_name": "Kenya",
     "daylight_minutes": 727,
     "is_day": 1,
     "latitude": -1.2921,

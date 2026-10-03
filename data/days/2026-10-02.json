@@ -54,12 +54,25 @@
     }
   },
   "city": {
-    "brief": "Kyoto was Japan's imperial capital for more than a millennium. Its grid, temples, gardens, craft traditions, and layered neighborhoods still carry that history into daily life.",
+    "brief": "Kyoto, officially Kyoto City , is the capital city of Kyoto Prefecture in the Kansai region of Japan's largest and most populous island of Honshu. As of 2020, the city had a population of 1.46 million, making it the ninth-most populous city in Japan. More than half (56.8%) of Kyoto Prefecture's population resides in the city.",
+    "continent": "Asia",
+    "country_name": "Japan",
     "fact": "Kyoto served as Japan's imperial capital from 794 until the imperial court moved to Tokyo in 1869.",
     "fact_source": "https://en.wikipedia.org/wiki/Kyoto",
+    "known_for": "temples, gardens, craft traditions, and imperial history",
+    "landmark": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Golden_Pavilion_Kinkaku-ji_water_mirror_2024.jpg/330px-Golden_Pavilion_Kinkaku-ji_water_mirror_2024.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Kinkaku-ji",
+      "source": "https://en.wikipedia.org/wiki/Kinkaku-ji"
+    },
+    "person": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/Shigeru_Miyamoto_20150610_%28cropped_4%29.jpg/330px-Shigeru_Miyamoto_20150610_%28cropped_4%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Shigeru Miyamoto",
+      "source": "https://en.wikipedia.org/wiki/Shigeru_Miyamoto"
+    },
     "source": "https://en.wikipedia.org/wiki/Kyoto",
     "source_label": "Wikipedia",
-    "source_status": "curated-fallback"
+    "source_status": "live"
   },
   "critique": {
     "mutation": {
@@ -79,27 +92,13 @@
     "#e19a67",
     "#f5d7a4"
   ],
-  "poem": [
-    "Above Kyoto, pale light crosses the open sky,",
-    "the wind carries one color into another,",
-    "and morning begins before anyone asks it to."
-  ],
-  "title": "First Light over Kyoto",
+  "title": "Kyoto, Japan",
   "weather": {
     "apparent_temperature_c": 11.0,
-    "best_window": {
-      "end": "18:00",
-      "label": "3\u20136 PM",
-      "rain_probability": 10,
-      "reason": "A mild, mostly dry three-hour stretch with manageable wind.",
-      "score": 72,
-      "start": "15:00",
-      "temperature_c": 12.0,
-      "wind_kph": 10.0
-    },
     "city": "Kyoto",
     "cloud_cover": 45,
     "country": "JP",
+    "country_name": "Japan",
     "daylight_minutes": 720,
     "fallback_reason": "offline mode",
     "is_day": 1,

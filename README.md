@@ -2,7 +2,7 @@
 
 > Weather suggests. Models propose. Skyloom decides.
 
-Skyloom publishes one useful, weather-driven city portrait each day. It combines a scored three-hour outdoor window, a concise city briefing, one sourced fact, and a generative artwork whose color, motion, density, light, and marks directly encode the day's conditions. An open-weight cloud model proposes creative direction; deterministic code breeds and measures four candidates; the strongest becomes tomorrow's champion.
+Skyloom publishes one weather-driven city portrait each day. It combines a concise city briefing, one sourced fact, a notable landmark and person, and a generative background whose color, motion, density, light, and marks directly encode the day's conditions. An open-weight cloud model proposes creative direction; deterministic code breeds and measures four candidates; the strongest becomes tomorrow's champion.
 
 The system uses GitHub Actions, GitHub Pages, Open-Meteo, and `gpt-oss-20b` through Cloudflare Workers AI. It has no always-on server, paid image model, or database.
 
@@ -39,18 +39,17 @@ Open `http://localhost:8000`.
 
 1. Select the day's city.
 2. Read current and hourly weather from Open-Meteo.
-3. Score every daylight three-hour block and select the best outdoor window.
-4. Retrieve a sourced city summary and pair it with a curated important fact.
-5. Ask the open-weight model for a palette, title, context line, and bounded mutation.
-6. Breed champion, director, previous-critic, and explorer candidates.
-7. Score composition, coverage, stroke length, contrast, weather fit, and novelty.
-8. Save the winning recipe and rebuild the bounded archive manifests.
+3. Retrieve a sourced city summary, landmark image, notable person, and important fact.
+4. Ask the open-weight model for a palette and bounded visual mutation.
+5. Breed champion, director, previous-critic, and explorer candidates.
+6. Score composition, coverage, stroke length, contrast, weather fit, and novelty.
+7. Save the winning recipe and rebuild the bounded archive manifests.
 
 If weather or model inference fails, deterministic fallbacks still publish the day's recipe and record the error.
 
 ## Retention strategy
 
-Skyloom does not commit rendered SVG or PNG files. The browser reconstructs each artwork from a small recipe containing its date seed, palette, genome, weather, poem, and score.
+Skyloom does not commit rendered SVG or PNG files. The browser reconstructs each artwork from a small recipe containing its date seed, palette, genome, weather, city context, and score.
 
 - Winning recipes are retained permanently.
 - `docs/data/recent.json` is capped at 90 recipes.
@@ -90,3 +89,4 @@ docs/data/              bounded public archive indexes
 ```
 
 Weather data is supplied by [Open-Meteo](https://open-meteo.com/) under CC BY 4.0. City briefings and fact sources link directly to Wikipedia from the interface.
+The bundled country outlines come from the public-domain Natural Earth dataset via the `world.geo.json` project, so the map has no tile service, API key, or usage cost.

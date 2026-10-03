@@ -6,7 +6,7 @@ from engine.gallery import _public_recipe
 from engine.genome import BOUNDS, DEFAULT_GENOME, clamp_deltas, clamp_genome, explore, mutate
 from engine.render import clean_palette, render_svg
 from engine.score import score
-from engine.weather import _best_window, city_for_day, fallback_weather
+from engine.weather import CITIES, city_for_day, fallback_weather
 
 
 class GenomeTests(unittest.TestCase):
@@ -53,7 +53,6 @@ class RetentionTests(unittest.TestCase):
         record = {
             "date": "2026-10-02",
             "title": "A Test Morning",
-            "poem": ["one", "two", "three"],
             "palette": ["#112233", "#445566", "#778899", "#ffeedd"],
             "weather": weather,
             "winner": "champion",
@@ -75,23 +74,13 @@ class CityIntelligenceTests(unittest.TestCase):
         self.assertGreater(len(context["fact"]), 40)
         self.assertTrue(context["source"].startswith("https://"))
         self.assertTrue(context["fact_source"].startswith("https://"))
+        self.assertIn("country_name", context)
+        self.assertTrue(context["landmark"]["source"].startswith("https://"))
+        self.assertTrue(context["person"]["source"].startswith("https://"))
 
-    def test_best_window_is_three_hours_and_prefers_dry_weather(self):
-        payload = {
-            "current": {"time": "2026-10-02T08:00"},
-            "hourly": {
-                "time": [f"2026-10-02T{hour:02d}:00" for hour in range(8, 14)],
-                "is_day": [1] * 6,
-                "precipitation_probability": [0, 0, 0, 80, 80, 80],
-                "temperature_2m": [20] * 6,
-                "wind_speed_10m": [8] * 6,
-                "uv_index": [2] * 6,
-            },
-        }
-        window = _best_window(payload)
-        self.assertEqual(window["start"], "08:00")
-        self.assertEqual(window["end"], "11:00")
-        self.assertGreater(window["score"], 80)
+    def test_city_rotation_has_thirteen_unique_cities(self):
+        self.assertEqual(len(CITIES), 13)
+        self.assertEqual(len({city["name"] for city in CITIES}), 13)
 
 
 if __name__ == "__main__":

@@ -23,6 +23,8 @@ def _public_recipe(record: dict) -> dict:
         "title": record["title"],
         "city": record["weather"]["city"],
         "country": record["weather"]["country"],
+        "country_name": city_context.get("country_name", record["weather"]["country"]),
+        "sample": bool(record.get("sample", False)),
         "temperature_c": weather["temperature_c"],
         "apparent_temperature_c": weather.get("apparent_temperature_c", weather["temperature_c"]),
         "relative_humidity": weather.get("relative_humidity", 50),
@@ -31,11 +33,6 @@ def _public_recipe(record: dict) -> dict:
         "sunrise": weather.get("sunrise", "—"),
         "sunset": weather.get("sunset", "—"),
         "daylight_minutes": weather.get("daylight_minutes", 720),
-        "best_window": weather.get("best_window", {
-            "label": "Forecast pending", "score": 0,
-            "reason": "The next live generation will calculate the strongest outdoor window.",
-            "rain_probability": 0, "temperature_c": weather["temperature_c"], "wind_kph": weather["wind_kph"],
-        }),
         "coordinates": {"latitude": weather["latitude"], "longitude": weather["longitude"]},
         "city_context": city_context,
         "weather": {
@@ -45,7 +42,6 @@ def _public_recipe(record: dict) -> dict:
             "wind_direction": weather["wind_direction"],
             "precipitation_mm": weather["precipitation_mm"],
         },
-        "poem": record["poem"],
         "winner": winner,
         "score": winner_score["total"],
         "palette": record["palette"],

@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#0b0d0e">
   <title>Skyloom — a living city portrait</title>
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
   <header class="topbar">
@@ -27,9 +27,19 @@
       <canvas id="portrait-canvas" role="img"></canvas>
       <div class="portrait-shade" aria-hidden="true"></div>
       <div class="portrait-heading">
-        <p class="kicker" id="portrait-date">LOADING DAILY SIGNAL</p>
+        <p class="kicker today-indicator" id="portrait-date">TODAY'S CITY</p>
         <h1 id="portrait-title">Skyloom</h1>
-        <p class="coordinates" id="coordinates">—</p>
+        <p class="portrait-explainer" id="portrait-explainer">The background reads today's weather. The foreground introduces the city.</p>
+      </div>
+      <div class="portrait-assets" aria-label="City landmark and notable person">
+        <a class="portrait-asset landmark" id="landmark-link" href="https://en.wikipedia.org/" target="_blank" rel="noreferrer">
+          <img id="landmark-image" alt="" crossorigin="anonymous">
+          <span><small>LANDMARK</small><b id="landmark-name">—</b><em>Wikipedia ↗</em></span>
+        </a>
+        <a class="portrait-asset person" id="person-link" href="https://en.wikipedia.org/" target="_blank" rel="noreferrer">
+          <img id="person-image" alt="" crossorigin="anonymous">
+          <span><small>NOTABLE PERSON</small><b id="person-name">—</b><em>Wikipedia ↗</em></span>
+        </a>
       </div>
       <button class="inspect-button" id="inspect-button" type="button">
         <span>Inspect the weave</span><b>→</b>
@@ -44,34 +54,35 @@
     <aside class="intelligence" aria-label="City intelligence">
       <div class="city-header">
         <div>
-          <p class="kicker">CITY SIGNAL / <span id="city-country">—</span></p>
+          <p class="kicker"><i class="today-dot"></i> TODAY'S CITY</p>
           <h2 id="city-name">Loading</h2>
+          <p class="country-name" id="city-country">—</p>
         </div>
-        <div class="local-clock"><strong id="local-clock">—</strong><span id="timezone">LOCAL</span></div>
       </div>
 
       <div class="tabs" role="tablist" aria-label="City information">
-        <button role="tab" aria-selected="true" aria-controls="today-panel" id="today-tab" data-tab="today">Today</button>
+        <button role="tab" aria-selected="true" aria-controls="today-panel" id="today-tab" data-tab="today">Overview</button>
         <button role="tab" aria-selected="false" aria-controls="city-panel" id="city-tab" data-tab="city">City / 60 sec</button>
-        <button role="tab" aria-selected="false" aria-controls="decode-panel" id="decode-tab" data-tab="decode">Decode</button>
+        <button role="tab" aria-selected="false" aria-controls="decode-panel" id="decode-tab" data-tab="decode">Portrait explained</button>
       </div>
 
       <div class="panel-stack">
         <section class="tab-panel active" id="today-panel" role="tabpanel" aria-labelledby="today-tab">
-          <article class="window-card">
-            <div class="window-score" aria-label="Outdoor window quality"><strong id="window-score">—</strong><span>/100</span></div>
-            <div>
-              <p class="kicker">BEST WINDOW TODAY</p>
-              <h3 id="window-time">Forecast pending</h3>
-              <p id="window-reason">Skyloom is measuring the day.</p>
+          <article class="city-notes">
+            <p class="kicker">WHY THIS CITY IS WORTH KNOWING</p>
+            <h3 id="known-for">Loading the city…</h3>
+            <div class="note-grid">
+              <div><span>LANDMARK</span><strong id="note-landmark">—</strong></div>
+              <div><span>PERSON</span><strong id="note-person">—</strong></div>
+              <div><span>REGION</span><strong id="note-region">—</strong></div>
             </div>
           </article>
 
           <div class="metric-grid" aria-label="Current conditions">
-            <div><span>NOW / FEELS</span><strong id="temperature">—</strong><small id="feels-like">—</small></div>
+            <div><span>THE BACKGROUND</span><strong id="temperature">—</strong><small id="feels-like">—</small></div>
             <div><span>WIND</span><strong id="wind-value">—</strong><small id="wind-direction">—</small></div>
             <div><span>HUMIDITY</span><strong id="humidity">—</strong><small id="weather-state">—</small></div>
-            <div><span>SUNSET</span><strong id="sunset">—</strong><small id="daylight">—</small></div>
+            <div><span>DAYLIGHT</span><strong id="daylight">—</strong><small>SHAPES THE GLOW</small></div>
           </div>
 
           <article class="fact-card">
@@ -91,7 +102,7 @@
             <span id="map-label">—</span>
           </div>
           <article class="city-brief">
-            <p class="kicker">THE CITY IN 60 SECONDS</p>
+            <p class="kicker">THE CITY IN 60 SECONDS · <span id="brief-country">—</span></p>
             <p id="city-brief">Loading verified city context…</p>
             <a id="city-source" href="https://en.wikipedia.org/" target="_blank" rel="noreferrer">Read the source ↗</a>
           </article>
@@ -99,15 +110,15 @@
 
         <section class="tab-panel" id="decode-panel" role="tabpanel" aria-labelledby="decode-tab" hidden>
           <div class="decoder-intro">
-            <p class="kicker">THE PORTRAIT IS A DATA DISPLAY</p>
-            <h3>Nothing on the canvas is arbitrary.</h3>
+            <p class="kicker">WHAT THE PORTRAIT MEANS</p>
+            <h3>Weather makes the mood. The city gives it a face.</h3>
           </div>
           <dl class="decoder-list">
-            <div><dt><i class="decoder-mark temperature-mark"></i>Temperature</dt><dd><span>sets the color temperature</span><b id="decode-temperature">—</b></dd></div>
-            <div><dt><i class="decoder-mark wind-mark"></i>Wind</dt><dd><span>sets stroke angle and curl</span><b id="decode-wind">—</b></dd></div>
-            <div><dt><i class="decoder-mark cloud-mark"></i>Cloud</dt><dd><span>sets density and opacity</span><b id="decode-cloud">—</b></dd></div>
-            <div><dt><i class="decoder-mark sun-mark"></i>Sunlight</dt><dd><span>positions the primary glow</span><b id="decode-sun">—</b></dd></div>
-            <div><dt><i class="decoder-mark rain-mark"></i>Precipitation</dt><dd><span>adds directional marks</span><b id="decode-rain">—</b></dd></div>
+            <div><dt><i class="decoder-mark temperature-mark"></i>Temperature</dt><dd><span>warmer day, warmer background</span><b id="decode-temperature">—</b></dd></div>
+            <div><dt><i class="decoder-mark wind-mark"></i>Wind</dt><dd><span>pushes the lines across the canvas</span><b id="decode-wind">—</b></dd></div>
+            <div><dt><i class="decoder-mark cloud-mark"></i>Cloud</dt><dd><span>adds more layers and softness</span><b id="decode-cloud">—</b></dd></div>
+            <div><dt><i class="decoder-mark sun-mark"></i>Daylight</dt><dd><span>moves the bright glow</span><b id="decode-sun">—</b></dd></div>
+            <div><dt><i class="decoder-mark rain-mark"></i>Rain</dt><dd><span>adds falling marks</span><b id="decode-rain">—</b></dd></div>
           </dl>
           <p class="selection-note" id="selection-note">Four candidate systems rendered. Code measured each one and selected the strongest.</p>
         </section>
@@ -126,12 +137,8 @@
     <form method="dialog">
       <button class="close-button" value="close" aria-label="Close guide">×</button>
       <p class="kicker">WELCOME TO SKYLOOM</p>
-      <h2>A city, translated into a living visual system.</h2>
-      <div class="guide-steps">
-        <div><b>01</b><p><strong>Use the day.</strong> Skyloom finds the strongest three-hour outdoor window from the hourly forecast.</p></div>
-        <div><b>02</b><p><strong>Read the city.</strong> A restrained map, concise briefing, and sourced fact add context without noise.</p></div>
-        <div><b>03</b><p><strong>Decode the art.</strong> Wind, cloud, temperature, light, and rain directly shape the portrait.</p></div>
-      </div>
+      <h2>Meet one city every day.</h2>
+      <p class="guide-copy">Skyloom turns today's weather into the background, then places a famous landmark and person in front. Explore the city, or open “Portrait explained” to see what every visual choice means.</p>
       <button class="enter-button" value="close">Enter Skyloom</button>
     </form>
   </dialog>
@@ -145,6 +152,6 @@
   </aside>
   <div class="drawer-scrim" id="drawer-scrim" hidden></div>
 
-  <script src="app.js" defer></script>
+  <script src="app.js?v=2" defer></script>
 </body>
 </html>

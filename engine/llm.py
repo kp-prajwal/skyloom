@@ -68,13 +68,13 @@ def direct(weather: dict, city: dict, champion: dict, recent: list[dict], seed: 
     }
     return _run([
         {"role": "system", "content": (
-            "You art-direct a deterministic city data portrait. Return JSON only with keys title, poem, palette, "
-            "mutation, rationale. poem must be an array of exactly 3 short lines. palette must contain exactly "
-            "4 hex colors. mutation may contain only allowed gene names and must respect the supplied delta ranges. "
+            "You art-direct a deterministic city data portrait. Return JSON only with keys palette, mutation, "
+            "rationale. palette must contain exactly 4 hex colors. mutation may contain only allowed gene names "
+            "and must respect the supplied delta ranges. "
             "Use the verified city context only for atmosphere; do not introduce new factual claims."
         )},
         {"role": "user", "content": json.dumps(prompt, separators=(",", ":"))},
-    ], max_tokens=430, seed=seed)
+    ], max_tokens=300, seed=seed)
 
 
 def critique(weather: dict, winner: dict, components: dict, seed: int) -> dict:

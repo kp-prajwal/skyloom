@@ -193,7 +193,19 @@ function readableClock(value) {
 
 function daylightLabel(minutes) {
   const value = Number(minutes || 0);
-  return `${Math.floor(value / 60)}H ${value % 60}M LIGHT`;
+  return `${Math.floor(value / 60)}H ${value % 60}M`;
+}
+
+function setPortraitAsset(kind, asset, city) {
+  const link = $(`#${kind}-link`);
+  const image = $(`#${kind}-image`);
+  const name = $(`#${kind}-name`);
+  name.textContent = asset?.name || 'Source pending';
+  image.alt = asset?.name ? `${asset.name}, associated with ${city}` : '';
+  image.src = asset?.image || '';
+  link.classList.toggle('no-image', !asset?.image);
+  setLink(`#${kind}-link`, asset?.source);
+  image.onerror = () => link.classList.add('no-image');
 }
 
 function showDay(day) {
@@ -201,26 +213,28 @@ function showDay(day) {
   renderRecipe($('#portrait-canvas'), day);
   const weather = day.weather;
   const context = day.city_context || {};
-  const windowData = day.best_window || {};
-  $('#portrait-date').textContent = `${formatDate(day.date)} / GENERATION ${String(day.winner || 'A').toUpperCase()}`;
-  $('#portrait-title').textContent = day.title;
-  $('#coordinates').textContent = coordinateLabel(day.coordinates);
+  const country = context.country_name || day.country_name || day.country;
+  const temperature = Number(day.temperature_c);
+  const temperatureMood = temperature >= 24 ? 'warm color' : temperature <= 10 ? 'cool color' : 'balanced color';
+  $('#portrait-date').textContent = `${day.sample ? 'ARCHIVE SAMPLE' : "TODAY'S CITY"} · ${formatDate(day.date)}`;
+  $('#portrait-title').textContent = `${day.city}, ${country}`;
+  $('#portrait-explainer').textContent = `${temperature.toFixed(0)}°C gives the background its ${temperatureMood}; ${context.landmark?.name || 'a landmark'} and ${context.person?.name || 'a notable person'} bring ${day.city} into the foreground.`;
   $('#generation-state').textContent = `GEN ${day.date.replaceAll('-', '.')}`;
-  $('#city-country').textContent = day.country;
+  $('#city-country').textContent = country;
   $('#city-name').textContent = day.city;
-  $('#local-clock').textContent = readableClock(day.local_time);
-  $('#timezone').textContent = day.timezone || 'LOCAL';
-
-  $('#window-score').textContent = Math.round(Number(windowData.score || 0));
-  $('#window-time').textContent = windowData.label || 'Forecast pending';
-  $('#window-reason').textContent = windowData.reason || 'The next run will calculate the strongest outdoor window.';
+  $('#brief-country').textContent = country;
+  $('#known-for').textContent = `${day.city} is known for ${context.known_for || 'its distinct history and culture'}.`;
+  $('#note-landmark').textContent = context.landmark?.name || '—';
+  $('#note-person').textContent = context.person?.name || '—';
+  $('#note-region').textContent = context.continent || '—';
+  setPortraitAsset('landmark', context.landmark, day.city);
+  setPortraitAsset('person', context.person, day.city);
   $('#temperature').textContent = `${Number(day.temperature_c).toFixed(1)}°`;
   $('#feels-like').textContent = `FEELS ${Number(day.apparent_temperature_c ?? day.temperature_c).toFixed(1)}°C`;
   $('#wind-value').textContent = `${Number(weather.wind_kph).toFixed(0)} km/h`;
   $('#wind-direction').textContent = `${compass(weather.wind_direction)} / ${Math.round(Number(weather.wind_direction))}°`;
   $('#humidity').textContent = `${Math.round(Number(day.relative_humidity ?? 0))}%`;
   $('#weather-state').textContent = weatherLabel(weather.weather_code);
-  $('#sunset').textContent = readableClock(day.sunset);
   $('#daylight').textContent = daylightLabel(day.daylight_minutes);
 
   $('#city-fact').textContent = context.fact || 'A verified city fact will appear on the next generation.';
@@ -234,13 +248,13 @@ function showDay(day) {
   $('#decode-temperature').textContent = `${Number(day.temperature_c).toFixed(1)}°C`;
   $('#decode-wind').textContent = `${compass(weather.wind_direction)} ${Math.round(Number(weather.wind_kph))} KM/H`;
   $('#decode-cloud').textContent = `${Math.round(Number(weather.cloud_cover ?? 0))}% COVER`;
-  $('#decode-sun').textContent = `${readableClock(day.sunrise)} → ${readableClock(day.sunset)}`;
+  $('#decode-sun').textContent = `${daylightLabel(day.daylight_minutes)} OF LIGHT`;
   $('#decode-rain').textContent = `${Number(weather.precipitation_mm || 0).toFixed(1)} MM`;
   $('#selection-note').textContent = `Four candidate systems rendered. ${safeText(day.winner).toUpperCase()} scored ${Number(day.score).toFixed(2)}/10 and became today’s portrait.`;
   const bytes = new Blob([JSON.stringify(day)]).size;
   $('#recipe-size').textContent = `${(bytes / 1024).toFixed(1)} KB`;
   $('#fitness').textContent = `${Number(day.score).toFixed(2)} / 10`;
-  renderMap(day);
+  renderMap(day).catch(() => renderFallbackMap(day));
 }
 
 const LAND = [
@@ -253,21 +267,59 @@ const LAND = [
   [[44,-13],[51,-16],[49,-26],[43,-24]],
   [[130,34],[145,43],[142,27]]
 ];
+let worldMapPromise;
 
 function projectPoint([longitude, latitude]) {
   return [((longitude + 180) / 360) * 800, ((90 - latitude) / 180) * 380];
 }
 
-function renderMap(day) {
+function polygonPath(rings) {
+  return rings.map(ring => ring.map((point, index) => {
+    const [x, y] = projectPoint(point);
+    return `${index ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join('') + 'Z').join('');
+}
+
+function geometryPath(geometry) {
+  if (geometry.type === 'Polygon') return polygonPath(geometry.coordinates);
+  if (geometry.type === 'MultiPolygon') return geometry.coordinates.map(polygonPath).join('');
+  return '';
+}
+
+function countryMatches(mapName, requested) {
+  const aliases = {
+    'United States': 'United States of America',
+    'South Korea': 'Republic of Korea',
+  };
+  return mapName === requested || mapName === aliases[requested];
+}
+
+async function renderMap(day) {
   const grid = $('#map-grid');
   const land = $('#map-land');
   const marker = $('#map-marker');
+  const country = day.city_context?.country_name || day.country_name || day.country;
   grid.innerHTML = [...Array(7)].map((_, index) => `<line x1="${(index + 1) * 100}" y1="0" x2="${(index + 1) * 100}" y2="380"/>`).join('')
     + [...Array(3)].map((_, index) => `<line x1="0" y1="${(index + 1) * 95}" x2="800" y2="${(index + 1) * 95}"/>`).join('');
-  land.innerHTML = LAND.map(polygon => `<polygon points="${polygon.map(point => projectPoint(point).join(',')).join(' ')}"/>`).join('');
+  worldMapPromise ||= fetch('data/world-countries.geojson', { cache: 'force-cache' }).then(response => {
+    if (!response.ok) throw new Error('Map unavailable');
+    return response.json();
+  });
+  const geojson = await worldMapPromise;
+  land.innerHTML = geojson.features.map(feature => {
+    const selected = countryMatches(feature.properties.name, country);
+    return `<path class="${selected ? 'selected-country' : ''}" d="${geometryPath(feature.geometry)}"/>`;
+  }).join('');
   const [x, y] = projectPoint([Number(day.coordinates.longitude), Number(day.coordinates.latitude)]);
   marker.innerHTML = `<circle class="marker-halo" cx="${x}" cy="${y}" r="12"><animate attributeName="r" values="8;17;8" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;.15;.8" dur="3s" repeatCount="indefinite"/></circle><circle class="marker-core" cx="${x}" cy="${y}" r="3.5"/>`;
-  $('#map-label').textContent = `${day.city} / ${coordinateLabel(day.coordinates)}`;
+  $('#map-label').textContent = `${day.city}, ${country}`;
+}
+
+function renderFallbackMap(day) {
+  $('#map-land').innerHTML = LAND.map(polygon => `<polygon points="${polygon.map(point => projectPoint(point).join(',')).join(' ')}"/>`).join('');
+  const [x, y] = projectPoint([Number(day.coordinates.longitude), Number(day.coordinates.latitude)]);
+  $('#map-marker').innerHTML = `<circle class="marker-halo" cx="${x}" cy="${y}" r="12"/><circle class="marker-core" cx="${x}" cy="${y}" r="3.5"/>`;
+  $('#map-label').textContent = `${day.city}, ${day.country_name || day.country}`;
 }
 
 function activateTab(name, focus = false) {
@@ -301,7 +353,8 @@ function archiveCard(day) {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'archive-item';
-  button.innerHTML = `<canvas aria-hidden="true"></canvas><span><strong>${escapeHtml(day.title)}</strong>${escapeHtml(day.city)} · ${escapeHtml(formatDate(day.date))}</span>`;
+  const country = day.city_context?.country_name || day.country_name || day.country;
+  button.innerHTML = `<canvas aria-hidden="true"></canvas><span><strong>${escapeHtml(day.city)}, ${escapeHtml(country)}</strong>${day.sample ? '<em>SAMPLE</em>' : ''}${escapeHtml(formatDate(day.date))}</span>`;
   renderRecipe(button.querySelector('canvas'), day, true);
   button.addEventListener('click', () => {
     showDay(day);
@@ -383,7 +436,7 @@ async function initialise() {
   } catch (error) {
     $('#portrait-title').textContent = 'Signal offline';
     $('#portrait-date').textContent = error.message.toUpperCase();
-    $('#window-reason').textContent = 'Run Skyloom once to create the first city portrait.';
+    $('#portrait-explainer').textContent = 'Run Skyloom once to create the first city portrait.';
   }
 }
 

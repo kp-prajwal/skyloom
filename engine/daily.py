@@ -34,15 +34,10 @@ def write_json(path: Path, value) -> None:
 
 def sanitize_direction(raw: dict, fallback: dict) -> dict:
     title = str(raw.get("title", fallback["title"]))[:100]
-    poem = raw.get("poem")
-    if not isinstance(poem, list) or len(poem) != 3:
-        poem = fallback["poem"]
-    poem = [str(line)[:180] for line in poem]
     palette = clean_palette(raw.get("palette"))
     mutation = clamp_deltas(raw.get("mutation"))
     return {
         "title": title,
-        "poem": poem,
         "palette": palette,
         "mutation": mutation,
         "rationale": str(raw.get("rationale", fallback["rationale"]))[:400],
@@ -126,7 +121,6 @@ def run(day: date, offline: bool = False, force: bool = False) -> dict:
     record = {
         "date": day_key,
         "title": direction["title"],
-        "poem": direction["poem"],
         "palette": direction["palette"],
         "weather": weather,
         "city": context,
