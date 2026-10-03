@@ -1,0 +1,141 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 8.497,
+          "contrast": 10.0,
+          "coverage": 7.269,
+          "novelty": 0.0,
+          "stroke_length": 9.675,
+          "weather_fit": 9.861
+        },
+        "total": 7.904
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 8.497,
+          "contrast": 10.0,
+          "coverage": 7.269,
+          "novelty": 0.609,
+          "stroke_length": 9.675,
+          "weather_fit": 9.861
+        },
+        "total": 7.977
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 8.497,
+          "contrast": 10.0,
+          "coverage": 6.27,
+          "novelty": 1.458,
+          "stroke_length": 9.675,
+          "weather_fit": 9.998
+        },
+        "total": 7.924
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 8.374,
+          "contrast": 10.0,
+          "coverage": 6.737,
+          "novelty": 1.718,
+          "stroke_length": 9.675,
+          "weather_fit": 9.861
+        },
+        "total": 7.987
+      }
+    }
+  },
+  "city": {
+    "brief": "Nairobi, is the capital and largest city of Kenya, located in the south-central part of the country. As of 2026, it has a population of 5.6 million and a metropolitan population of 15.95 million, making it the 8th most populous city in Africa and the 4th most populous metropolitan area. The city goes beyond its borders and has expanded into neighbouring counties, making it the 4th largest metropolitan area in Africa.",
+    "fact": "The name Nairobi comes from the Maasai phrase Enkare Nairobi, commonly translated as \u201cplace of cool waters.\u201d",
+    "fact_source": "https://en.wikipedia.org/wiki/Nairobi",
+    "source": "https://en.wikipedia.org/wiki/Nairobi",
+    "source_label": "Wikipedia",
+    "source_status": "live"
+  },
+  "critique": {
+    "mutation": {
+      "flow_scale": 0.0005,
+      "horizon": -0.01
+    },
+    "source": "fallback",
+    "verdict": "The measured novelty score has the clearest room to improve."
+  },
+  "date": "2026-10-03",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [
+    {
+      "component": "director",
+      "message": "Cloudflare response did not contain generated text"
+    },
+    {
+      "component": "critic",
+      "message": "Cloudflare response did not contain generated text"
+    }
+  ],
+  "palette": [
+    "#23203d",
+    "#d56d4b",
+    "#f2b866",
+    "#fff0bf"
+  ],
+  "poem": [
+    "Above Nairobi, warm light gathers at the roofs,",
+    "the wind carries one color into another,",
+    "and morning begins before anyone asks it to."
+  ],
+  "title": "First Light over Nairobi",
+  "weather": {
+    "apparent_temperature_c": 22.5,
+    "best_window": {
+      "end": "11:00",
+      "label": "8:00 AM\u201311:00 AM",
+      "rain_probability": 14,
+      "reason": "The strongest outdoor window: dry, calm, with 14% average rain probability.",
+      "score": 90,
+      "start": "08:00",
+      "temperature_c": 19.5,
+      "wind_kph": 9.4
+    },
+    "city": "Nairobi",
+    "cloud_cover": 2,
+    "country": "KE",
+    "daylight_minutes": 727,
+    "is_day": 1,
+    "latitude": -1.2921,
+    "local_time": "2026-10-03T18:00",
+    "longitude": 36.8219,
+    "precipitation_mm": 0.0,
+    "relative_humidity": 28,
+    "source": "Open-Meteo",
+    "sunrise": "06:18",
+    "sunset": "18:25",
+    "temperature_c": 26.0,
+    "timezone": "GMT+3",
+    "weather_code": 0,
+    "wind_direction": 86,
+    "wind_kph": 17.0
+  },
+  "winner": "explorer",
+  "winning_genome": {
+    "curl": 1.50385,
+    "flow_scale": 0.01085,
+    "horizon": 0.55898,
+    "light_x": 0.71452,
+    "light_y": 0.35375,
+    "opacity": 0.25125,
+    "step_length": 7.78852,
+    "steps": 25,
+    "stroke_count": 484,
+    "stroke_width": 1.43115
+  }
+}
