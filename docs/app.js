@@ -251,9 +251,6 @@ function showDay(day) {
   $('#decode-sun').textContent = `${daylightLabel(day.daylight_minutes)} OF LIGHT`;
   $('#decode-rain').textContent = `${Number(weather.precipitation_mm || 0).toFixed(1)} MM`;
   $('#selection-note').textContent = `Four candidate systems rendered. ${safeText(day.winner).toUpperCase()} scored ${Number(day.score).toFixed(2)}/10 and became today’s portrait.`;
-  const bytes = new Blob([JSON.stringify(day)]).size;
-  $('#recipe-size').textContent = `${(bytes / 1024).toFixed(1)} KB`;
-  $('#fitness').textContent = `${Number(day.score).toFixed(2)} / 10`;
   renderMap(day).catch(() => renderFallbackMap(day));
 }
 
