@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from urllib.parse import quote
+from urllib.parse import quote, unquote, urlencode, urlparse
 from urllib.request import Request, urlopen
 
 
@@ -143,6 +143,140 @@ def _page_summary(title: str, timeout: int) -> dict:
         return json.load(response)
 
 
+def _get_json(url: str, timeout: int) -> dict:
+    request = Request(url, headers={"User-Agent": "Skyloom/1.2 (city portrait; GitHub project)"})
+    with urlopen(request, timeout=timeout) as response:
+        return json.load(response)
+
+
+def _nearby_pages(city: dict, timeout: int) -> list[dict]:
+    params = {
+        "action": "query", "format": "json", "formatversion": "2",
+        "generator": "geosearch", "ggsnamespace": "0", "ggslimit": "24",
+        "ggsradius": "10000", "ggscoord": f"{city['latitude']}|{city['longitude']}",
+        "prop": "extracts|pageimages|info", "exintro": "1", "explaintext": "1",
+        "piprop": "thumbnail", "pithumbsize": "900", "inprop": "url",
+    }
+    payload = _get_json("https://en.wikipedia.org/w/api.php?" + urlencode(params), timeout)
+    return sorted(payload.get("query", {}).get("pages", []), key=lambda page: page.get("index", 999))
+
+
+def _person_from_city(city: dict, timeout: int) -> dict | None:
+    geoname_id = city.get("geoname_id")
+    if not geoname_id:
+        return None
+    query = f'''SELECT ?person ?personLabel ?article ?sitelinks WHERE {{
+      ?place wdt:P1566 "{geoname_id}" .
+      ?person wdt:P31 wd:Q5; wdt:P19 ?place; wikibase:sitelinks ?sitelinks .
+      ?article schema:about ?person; schema:isPartOf <https://en.wikipedia.org/> .
+      SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
+    }} ORDER BY DESC(?sitelinks) LIMIT 1'''
+    params = urlencode({"query": query, "format": "json"})
+    payload = _get_json(f"https://query.wikidata.org/sparql?{params}", timeout)
+    bindings = payload.get("results", {}).get("bindings", [])
+    if not bindings:
+        return None
+    match = bindings[0]
+    article = match["article"]["value"]
+    title = unquote(urlparse(article).path.rsplit("/", 1)[-1])
+    person = {"name": match["personLabel"]["value"], "source": article, "image": ""}
+    try:
+        page = _page_summary(title, timeout)
+        person["source"] = page.get("content_urls", {}).get("desktop", {}).get("page", article)
+        person["image"] = page.get("thumbnail", {}).get("source", "")
+    except Exception:
+        pass
+    return person
+
+
+LANDMARK_WORDS = (
+    "abbey", "arena", "basilica", "bridge", "castle", "cathedral", "church", "fort",
+    "garden", "hall", "historic", "landmark", "memorial", "monument", "mosque", "museum",
+    "palace", "park", "square", "stadium", "station", "temple", "theatre", "tower",
+)
+
+
+def _dynamic_context(city: dict, offline: bool, timeout: int) -> dict:
+    name = city["name"]
+    country = city.get("country_name", city["country"])
+    region = city.get("region", "")
+    location = ", ".join(part for part in (region, country) if part)
+    geoname_url = f"https://www.geonames.org/{city.get('geoname_id', '')}"
+    population = int(city.get("population", 0))
+    population_fact = (
+        f"GeoNames records {name} as a populated place in {location} with approximately {population:,} residents."
+        if population else f"GeoNames records {name} as a populated place in {location}."
+    )
+    result = {
+        "country_name": country,
+        "continent": city.get("continent", "World"),
+        "known_for": "its local history, landscape, and community life",
+        "brief": f"{name} is a city or town in {location}. Skyloom selected it from its worldwide city catalog.",
+        "fact": population_fact,
+        "fact_source": geoname_url,
+        "source": geoname_url,
+        "source_label": "GeoNames",
+        "source_status": "catalog-fallback",
+        "landmark": {"name": name, "source": geoname_url, "image": ""},
+        "person": {"name": f"People of {name}", "source": geoname_url, "image": ""},
+    }
+    if offline:
+        return result
+
+    errors = []
+    try:
+        pages = _nearby_pages(city, timeout)
+        city_name = name.casefold()
+        city_page = next((page for page in pages if page.get("title", "").casefold() == city_name), None)
+        city_page = city_page or next((page for page in pages if page.get("extract")), None)
+        if city_page:
+            extract = _trim_summary(city_page.get("extract", ""))
+            if extract:
+                result["brief"] = extract
+                sentences = [sentence.strip() for sentence in extract.split(". ") if sentence.strip()]
+                result["fact"] = (sentences[1] if len(sentences) > 1 else sentences[0]).rstrip(".") + "."
+            result["source"] = city_page.get("fullurl", result["source"])
+            result["fact_source"] = result["source"]
+            result["source_label"] = "Wikipedia"
+            result["source_status"] = "live"
+            result["landmark"] = {
+                "name": name,
+                "source": result["source"],
+                "image": city_page.get("thumbnail", {}).get("source", ""),
+            }
+
+        landmark_candidates = []
+        for index, page in enumerate(pages):
+            if page is city_page or not page.get("thumbnail"):
+                continue
+            title_text = page.get("title", "").casefold()
+            extract_text = page.get("extract", "").casefold()
+            title_hits = sum(word in title_text for word in LANDMARK_WORDS)
+            extract_hits = sum(word in extract_text for word in LANDMARK_WORDS)
+            score = title_hits * 30 + extract_hits * 3 - index
+            landmark_candidates.append((score, page))
+        if landmark_candidates:
+            score, landmark_page = max(landmark_candidates, key=lambda item: item[0])
+            if score > 0:
+                result["landmark"] = {
+                    "name": landmark_page["title"],
+                    "source": landmark_page.get("fullurl", result["source"]),
+                    "image": landmark_page.get("thumbnail", {}).get("source", ""),
+                }
+    except Exception as exc:
+        errors.append(f"city: {exc}")
+
+    try:
+        person = _person_from_city(city, timeout)
+        if person:
+            result["person"] = person
+    except Exception as exc:
+        errors.append(f"person: {exc}")
+    if errors:
+        result["source_error"] = "; ".join(errors)[:300]
+    return result
+
+
 def _public_asset(asset: dict) -> dict:
     title = asset["wiki_title"]
     return {
@@ -153,6 +287,8 @@ def _public_asset(asset: dict) -> dict:
 
 
 def city_context(city: dict, offline: bool = False, timeout: int = 15) -> dict:
+    if city["name"] not in CITY_PROFILES:
+        return _dynamic_context(city, offline, timeout)
     profile = CITY_PROFILES[city["name"]].copy()
     title = profile.pop("wikipedia_title")
     landmark = _public_asset(profile.pop("landmark"))

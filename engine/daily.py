@@ -13,7 +13,7 @@ from .gallery import rebuild
 from .genome import DEFAULT_GENOME, clamp_deltas, clamp_genome, explore, mutate, stable_seed
 from .render import clean_palette
 from .score import fallback_critique, score
-from .weather import city_for_day, fallback_direction, fallback_weather, fetch_weather
+from .weather import city_aliases, city_for_day, fallback_direction, fallback_weather, fetch_weather
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,7 +53,18 @@ def run(day: date, offline: bool = False, force: bool = False) -> dict:
         return read_json(day_path, {})
 
     errors = []
-    city = city_for_day(day)
+    used_cities = set()
+    for path in sorted((ROOT / "data" / "days").glob("*.json")):
+        if path == day_path:
+            continue
+        prior_weather = read_json(path, {}).get("weather", {})
+        if prior_weather.get("city") and prior_weather.get("country"):
+            used_cities.update(city_aliases({
+                "name": prior_weather["city"],
+                "country": prior_weather["country"],
+                "geoname_id": prior_weather.get("geoname_id", ""),
+            }))
+    city = city_for_day(day, used_cities)
     if offline:
         weather = fallback_weather(city, "offline mode")
     else:

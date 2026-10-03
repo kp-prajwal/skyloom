@@ -4,7 +4,7 @@
 
 Skyloom publishes one weather-driven city portrait each day. It combines a concise city briefing, one sourced fact, a notable landmark and person, and a generative background whose color, motion, density, light, and marks directly encode the day's conditions. An open-weight cloud model proposes creative direction; deterministic code breeds and measures four candidates; the strongest becomes tomorrow's champion.
 
-The system uses GitHub Actions, GitHub Pages, Open-Meteo, and `gpt-oss-20b` through Cloudflare Workers AI. It has no always-on server, paid image model, or database.
+The system uses GitHub Actions, GitHub Pages, Open-Meteo, GeoNames, Wikipedia, and `gpt-oss-20b` through Cloudflare Workers AI. It has no always-on server, paid image model, or database.
 
 ## One-command cloud setup
 
@@ -37,13 +37,15 @@ Open `http://localhost:8000`.
 
 ## The daily loop
 
-1. Select the day's city.
+1. Select an unused city or town from a deterministically shuffled catalog of more than 64,000 populated places.
 2. Read current and hourly weather from Open-Meteo.
 3. Retrieve a sourced city summary, landmark image, notable person, and important fact.
 4. Ask the open-weight model for a palette and bounded visual mutation.
 5. Breed champion, director, previous-critic, and explorer candidates.
 6. Score composition, coverage, stroke length, contrast, weather fit, and novelty.
 7. Save the winning recipe and rebuild the bounded archive manifests.
+
+The scheduled workflow runs at **7:00 a.m. America/Chicago time** every day. The IANA timezone keeps the local run time at 7:00 through both CST and daylight-saving time. Selection skips every GeoNames ID already present in `data/days`, so a place cannot repeat until the catalog is exhausted. Run `python3 scripts/update_city_catalog.py` to refresh the catalog from GeoNames.
 
 If weather or model inference fails, deterministic fallbacks still publish the day's recipe and record the error.
 
@@ -82,6 +84,7 @@ engine/genome.py       bounded style genome and mutation
 engine/score.py        deterministic candidate fitness
 engine/weather.py      Open-Meteo and weather fallbacks
 engine/gallery.py      recent and monthly recipe manifests
+data/cities.tsv.gz     shuffled GeoNames city and town catalog
 data/champion.json     reigning genome and critic proposal
 data/days/             permanent daily records
 docs/app.js            browser-side recipe renderer
@@ -89,4 +92,5 @@ docs/data/              bounded public archive indexes
 ```
 
 Weather data is supplied by [Open-Meteo](https://open-meteo.com/) under CC BY 4.0. City briefings and fact sources link directly to Wikipedia from the interface.
+City and town selection data is supplied by [GeoNames](https://www.geonames.org/) under CC BY 4.0.
 The bundled country outlines come from the public-domain Natural Earth dataset via the `world.geo.json` project, so the map has no tile service, API key, or usage cost.

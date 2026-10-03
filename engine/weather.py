@@ -1,11 +1,17 @@
 from __future__ import annotations
 
+import csv
 from datetime import date, datetime
+from functools import lru_cache
+import gzip
 import json
+from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 
+# A small built-in set keeps offline development working if the catalog is
+# missing. Production selection uses the much larger GeoNames catalog.
 CITIES = [
     {"name": "Chicago", "country": "US", "country_name": "United States", "latitude": 41.8781, "longitude": -87.6298},
     {"name": "Reykjavik", "country": "IS", "country_name": "Iceland", "latitude": 64.1466, "longitude": -21.9426},
@@ -23,8 +29,54 @@ CITIES = [
 ]
 
 
-def city_for_day(day: date) -> dict:
-    return CITIES[(day.timetuple().tm_yday - 1) % len(CITIES)]
+ROOT = Path(__file__).resolve().parents[1]
+CATALOG_PATH = ROOT / "data" / "cities.tsv.gz"
+CATALOG_EPOCH = date(2026, 1, 1)
+
+
+def city_aliases(city: dict) -> set[str]:
+    aliases = {f"name:{city['name'].casefold()}:{city['country'].casefold()}"}
+    if city.get("geoname_id"):
+        aliases.add(f"geonames:{city['geoname_id']}")
+    return aliases
+
+
+def city_key(city: dict) -> str:
+    return next((key for key in city_aliases(city) if key.startswith("geonames:")), sorted(city_aliases(city))[0])
+
+
+@lru_cache(maxsize=1)
+def city_catalog() -> tuple[dict, ...]:
+    if not CATALOG_PATH.exists():
+        return tuple(CITIES)
+    with gzip.open(CATALOG_PATH, mode="rt", encoding="utf-8", newline="") as handle:
+        rows = []
+        for row in csv.DictReader(handle, delimiter="\t"):
+            rows.append({
+                "geoname_id": row["geoname_id"],
+                "name": row["name"],
+                "country": row["country"],
+                "country_name": row["country_name"],
+                "region": row.get("region", ""),
+                "continent": row["continent"],
+                "latitude": float(row["latitude"]),
+                "longitude": float(row["longitude"]),
+                "population": int(row["population"]),
+                "timezone": row["timezone"],
+            })
+    return tuple(rows) or tuple(CITIES)
+
+
+def city_for_day(day: date, used: set[str] | None = None) -> dict:
+    """Choose deterministically from a shuffled catalog, skipping prior cities."""
+    catalog = city_catalog()
+    used = used or set()
+    start = (day - CATALOG_EPOCH).days % len(catalog)
+    for step in range(len(catalog)):
+        city = catalog[(start + step) % len(catalog)]
+        if city_aliases(city).isdisjoint(used):
+            return city.copy()
+    raise RuntimeError("Skyloom has used every city in its catalog")
 
 
 def fallback_weather(city: dict, reason: str = "offline") -> dict:
@@ -32,6 +84,7 @@ def fallback_weather(city: dict, reason: str = "offline") -> dict:
         "city": city["name"],
         "country": city["country"],
         "country_name": city.get("country_name", city["country"]),
+        "geoname_id": city.get("geoname_id", ""),
         "latitude": city["latitude"],
         "longitude": city["longitude"],
         "temperature_c": 12.0,
@@ -84,6 +137,7 @@ def fetch_weather(city: dict, timeout: int = 15) -> dict:
         "city": city["name"],
         "country": city["country"],
         "country_name": city.get("country_name", city["country"]),
+        "geoname_id": city.get("geoname_id", ""),
         "latitude": city["latitude"],
         "longitude": city["longitude"],
         "temperature_c": current["temperature_2m"],
