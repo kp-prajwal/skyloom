@@ -99,14 +99,15 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--signal); outlin
 .city-brief { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(18px,3vh,30px); border: 1px solid var(--line); }
 .city-brief > p:nth-child(2) { margin: 10px 0; font: 450 clamp(.92rem,1.35vw,1.1rem)/1.52 var(--sans); }
 #decode-panel { display: grid; grid-template-rows: auto minmax(0,1fr) auto; gap: 13px; }
-.decoder-intro { display: flex; align-items: end; justify-content: space-between; gap: 16px; }
-.decoder-intro h3 { max-width: 300px; margin: 0; font: 600 1rem/1.2 var(--sans); letter-spacing: -.02em; text-align: right; }
+.decoder-intro { display: flex; align-items: center; }
+.decoder-summary { margin: 0; color: var(--ink); font-size: .88rem; font-weight: 550; line-height: 1.4; letter-spacing: -.01em; }
 .decoder-list { margin: 0; border: 1px solid var(--line); overflow: hidden; }
 .decoder-list > div { height: 20%; min-height: 50px; display: grid; grid-template-columns: 1fr 1.35fr; align-items: center; gap: 16px; padding: 8px 15px; border-bottom: 1px solid var(--line-soft); }
 .decoder-list > div:last-child { border-bottom: 0; }
 .decoder-list dt { display: flex; align-items: center; gap: 10px; font: 600 .82rem var(--sans); }
-.decoder-list dd { margin: 0; display: flex; justify-content: space-between; gap: 10px; color: var(--quiet); font-size: .64rem; }
-.decoder-list dd b { color: var(--ink); font-weight: 600; white-space: nowrap; }
+.decoder-list dd { margin: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--muted); font-size: .75rem; }
+.decoder-list dd span { line-height: 1.35; }
+.decoder-list dd b { color: var(--ink); font-size: .66rem; font-weight: 650; white-space: nowrap; }
 .decoder-mark { width: 15px; height: 15px; display: inline-block; border: 1px solid var(--quiet); }
 .temperature-mark { border-radius: 50%; background: linear-gradient(135deg,#789ac8,#e68a5c); }
 .wind-mark { height: 1px; border: 0; background: var(--ink); transform: rotate(-20deg); }
