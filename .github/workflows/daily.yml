@@ -2,7 +2,14 @@ name: Weave the sky
 
 on:
   schedule:
-    - cron: "0 7 * * *"
+    # Primary run plus two staggered recovery windows. GitHub can delay or
+    # drop scheduled events during load spikes; the generator is idempotent,
+    # so retries exit before external calls when today's record already exists.
+    - cron: "7 7 * * *"
+      timezone: "America/Chicago"
+    - cron: "23 8 * * *"
+      timezone: "America/Chicago"
+    - cron: "41 9 * * *"
       timezone: "America/Chicago"
   workflow_dispatch:
 

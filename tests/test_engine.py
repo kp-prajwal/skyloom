@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+from pathlib import Path
 import unittest
 
 from engine.city import city_context
@@ -96,6 +97,15 @@ class CityIntelligenceTests(unittest.TestCase):
         context = city_context(city_catalog()[0], offline=True)
         self.assertIn("GeoNames", context["source_label"])
         self.assertGreater(len(context["brief"]), 40)
+
+
+class AutomationTests(unittest.TestCase):
+    def test_daily_schedule_has_staggered_recovery_windows(self):
+        workflow = (Path(__file__).resolve().parents[1] / ".github" / "workflows" / "daily.yml").read_text()
+        self.assertIn('cron: "7 7 * * *"', workflow)
+        self.assertIn('cron: "23 8 * * *"', workflow)
+        self.assertIn('cron: "41 9 * * *"', workflow)
+        self.assertEqual(workflow.count('timezone: "America/Chicago"'), 3)
 
 
 if __name__ == "__main__":

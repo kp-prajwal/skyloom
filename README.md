@@ -45,7 +45,7 @@ Open `http://localhost:8000`.
 6. Score composition, coverage, stroke length, contrast, weather fit, and novelty.
 7. Save the winning recipe and rebuild the bounded archive manifests.
 
-The scheduled workflow runs at **7:00 a.m. America/Chicago time** every day. The IANA timezone keeps the local run time at 7:00 through both CST and daylight-saving time. Selection skips every GeoNames ID already present in `data/days`, so a place cannot repeat until the catalog is exhausted. Run `python3 scripts/update_city_catalog.py` to refresh the catalog from GeoNames.
+The scheduled workflow targets **7:07 a.m. America/Chicago time** every day, with automatic recovery checks at **8:23 a.m.** and **9:41 a.m.** The IANA timezone preserves local Central time through both CST and daylight-saving time. Every run is idempotent: once the day's record exists, later checks exit before weather or model calls. Selection skips every GeoNames ID already present in `data/days`, so a place cannot repeat until the catalog is exhausted. Run `python3 scripts/update_city_catalog.py` to refresh the catalog from GeoNames.
 
 If weather or model inference fails, deterministic fallbacks still publish the day's recipe and record the error.
 
