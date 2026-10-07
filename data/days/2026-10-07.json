@@ -1,0 +1,141 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 8.489,
+          "contrast": 10.0,
+          "coverage": 7.632,
+          "novelty": 0.0,
+          "stroke_length": 8.974,
+          "weather_fit": 8.166
+        },
+        "total": 7.558
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 8.489,
+          "contrast": 10.0,
+          "coverage": 7.632,
+          "novelty": 0.609,
+          "stroke_length": 8.974,
+          "weather_fit": 8.166
+        },
+        "total": 7.631
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 8.489,
+          "contrast": 10.0,
+          "coverage": 6.714,
+          "novelty": 1.267,
+          "stroke_length": 8.974,
+          "weather_fit": 8.72
+        },
+        "total": 7.644
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 8.585,
+          "contrast": 10.0,
+          "coverage": 8.754,
+          "novelty": 2.15,
+          "stroke_length": 8.685,
+          "weather_fit": 9.519
+        },
+        "total": 8.239
+      }
+    }
+  },
+  "city": {
+    "brief": "Mt. Angel or Mount Angel is a city in Marion County, Oregon, United States. It is 18 miles (29 km) northeast of Salem, Oregon, on Oregon Route 214. The population was 3,392 at the 2020 census, down from 3,748 in 2010. Mt. Angel is part of the Salem Metropolitan Statistical Area.",
+    "continent": "North America",
+    "country_name": "United States",
+    "fact": "Angel or Mount Angel is a city in Marion County, Oregon, United States.",
+    "fact_source": "https://en.wikipedia.org/wiki/Mt._Angel,_Oregon",
+    "known_for": "its local history, landscape, and community life",
+    "landmark": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/Silverton%2C_Oregon%2C_October_2020_-_45.jpg/960px-Silverton%2C_Oregon%2C_October_2020_-_45.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Town Square Park",
+      "source": "https://en.wikipedia.org/wiki/Town_Square_Park"
+    },
+    "person": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/Don_Pettit_2024_%28portrait_crop%29.jpg/330px-Don_Pettit_2024_%28portrait_crop%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Donald Pettit",
+      "source": "https://en.wikipedia.org/wiki/Donald_Pettit"
+    },
+    "source": "https://en.wikipedia.org/wiki/Mt._Angel,_Oregon",
+    "source_label": "Wikipedia",
+    "source_status": "live"
+  },
+  "critique": {
+    "mutation": {
+      "flow_scale": 0.0005,
+      "horizon": -0.01
+    },
+    "source": "fallback",
+    "verdict": "The measured novelty score has the clearest room to improve."
+  },
+  "date": "2026-10-07",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [
+    {
+      "component": "director",
+      "message": "Cloudflare response did not contain generated text"
+    },
+    {
+      "component": "critic",
+      "message": "Cloudflare response did not contain generated text"
+    }
+  ],
+  "palette": [
+    "#17263f",
+    "#527c94",
+    "#e19a67",
+    "#f5d7a4"
+  ],
+  "title": "Silverton, United States",
+  "weather": {
+    "apparent_temperature_c": 16.8,
+    "city": "Silverton",
+    "cloud_cover": 17,
+    "country": "US",
+    "country_name": "United States",
+    "daylight_minutes": 683,
+    "geoname_id": "5752024",
+    "is_day": 1,
+    "latitude": 45.00512,
+    "local_time": "2026-10-07T11:45",
+    "longitude": -122.78315,
+    "precipitation_mm": 0.0,
+    "relative_humidity": 74,
+    "source": "Open-Meteo",
+    "sunrise": "07:16",
+    "sunset": "18:39",
+    "temperature_c": 17.4,
+    "timezone": "GMT-7",
+    "weather_code": 0,
+    "wind_direction": 18,
+    "wind_kph": 10.4
+  },
+  "winner": "explorer",
+  "winning_genome": {
+    "curl": 1.30929,
+    "flow_scale": 0.01091,
+    "horizon": 0.50042,
+    "light_x": 0.71178,
+    "light_y": 0.32931,
+    "opacity": 0.30815,
+    "step_length": 8.71123,
+    "steps": 24,
+    "stroke_count": 492,
+    "stroke_width": 1.61032
+  }
+}
