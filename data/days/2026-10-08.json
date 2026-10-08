@@ -1,0 +1,141 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 8.585,
+          "contrast": 10.0,
+          "coverage": 8.754,
+          "novelty": 0.0,
+          "stroke_length": 8.685,
+          "weather_fit": 9.27
+        },
+        "total": 7.936
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 8.585,
+          "contrast": 10.0,
+          "coverage": 8.754,
+          "novelty": 0.609,
+          "stroke_length": 8.685,
+          "weather_fit": 9.27
+        },
+        "total": 8.009
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 8.585,
+          "contrast": 10.0,
+          "coverage": 7.43,
+          "novelty": 1.791,
+          "stroke_length": 8.685,
+          "weather_fit": 9.898
+        },
+        "total": 8.025
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 8.217,
+          "contrast": 10.0,
+          "coverage": 8.977,
+          "novelty": 1.869,
+          "stroke_length": 8.084,
+          "weather_fit": 9.661
+        },
+        "total": 8.1
+      }
+    }
+  },
+  "city": {
+    "brief": "Winchester is an unincorporated town and census-designated place (CDP) in Clark County, Nevada, United States that contains part of the Las Vegas Strip. It is one of a number of CDPs in the unincorporated urbanized area directly south of Las Vegas. The population was 36,403 at the 2020 census. It is governed by the Clark County Commission with advice from the Winchester Town Advisory Board.",
+    "continent": "North America",
+    "country_name": "United States",
+    "fact": "It is one of a number of CDPs in the unincorporated urbanized area directly south of Las Vegas.",
+    "fact_source": "https://en.wikipedia.org/wiki/Winchester,_Nevada",
+    "known_for": "its local history, landscape, and community life",
+    "landmark": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c3/Boulder_Station_hotel_tower.jpg/960px-Boulder_Station_hotel_tower.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Boulder Station",
+      "source": "https://en.wikipedia.org/wiki/Boulder_Station"
+    },
+    "person": {
+      "image": "",
+      "name": "People of Winchester",
+      "source": "https://www.geonames.org/5515345"
+    },
+    "source": "https://en.wikipedia.org/wiki/Winchester,_Nevada",
+    "source_label": "Wikipedia",
+    "source_status": "live"
+  },
+  "critique": {
+    "mutation": {
+      "flow_scale": 0.0005,
+      "horizon": -0.01
+    },
+    "source": "fallback",
+    "verdict": "The measured novelty score has the clearest room to improve."
+  },
+  "date": "2026-10-08",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [
+    {
+      "component": "director",
+      "message": "Cloudflare response did not contain generated text"
+    },
+    {
+      "component": "critic",
+      "message": "Cloudflare response did not contain generated text"
+    }
+  ],
+  "palette": [
+    "#23203d",
+    "#d56d4b",
+    "#f2b866",
+    "#fff0bf"
+  ],
+  "title": "Winchester, United States",
+  "weather": {
+    "apparent_temperature_c": 33.0,
+    "city": "Winchester",
+    "cloud_cover": 0,
+    "country": "US",
+    "country_name": "United States",
+    "daylight_minutes": 692,
+    "geoname_id": "5515345",
+    "is_day": 1,
+    "latitude": 36.12997,
+    "local_time": "2026-10-08T11:45",
+    "longitude": -115.11889,
+    "precipitation_mm": 0.0,
+    "relative_humidity": 13,
+    "source": "Open-Meteo",
+    "sunrise": "06:41",
+    "sunset": "18:13",
+    "temperature_c": 34.9,
+    "timezone": "GMT-7",
+    "weather_code": 0,
+    "wind_direction": 48,
+    "wind_kph": 9.2
+  },
+  "winner": "explorer",
+  "winning_genome": {
+    "curl": 1.23529,
+    "flow_scale": 0.01197,
+    "horizon": 0.49596,
+    "light_x": 0.71178,
+    "light_y": 0.36824,
+    "opacity": 0.33294,
+    "step_length": 8.71123,
+    "steps": 25,
+    "stroke_count": 482,
+    "stroke_width": 1.61032
+  }
+}
