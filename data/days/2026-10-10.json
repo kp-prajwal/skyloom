@@ -1,0 +1,141 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 8.217,
+          "contrast": 10.0,
+          "coverage": 7.62,
+          "novelty": 0.0,
+          "stroke_length": 8.084,
+          "weather_fit": 8.701
+        },
+        "total": 7.458
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 8.217,
+          "contrast": 10.0,
+          "coverage": 7.62,
+          "novelty": 0.609,
+          "stroke_length": 8.084,
+          "weather_fit": 8.701
+        },
+        "total": 7.531
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 8.217,
+          "contrast": 10.0,
+          "coverage": 7.16,
+          "novelty": 1.126,
+          "stroke_length": 8.084,
+          "weather_fit": 9.854
+        },
+        "total": 7.718
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 9.42,
+          "contrast": 10.0,
+          "coverage": 6.367,
+          "novelty": 2.202,
+          "stroke_length": 8.202,
+          "weather_fit": 8.701
+        },
+        "total": 7.779
+      }
+    }
+  },
+  "city": {
+    "brief": "Tange is a city or town in Gansu, China. Skyloom selected it from its worldwide city catalog.",
+    "continent": "Asia",
+    "country_name": "China",
+    "fact": "GeoNames records Tange as a populated place in Gansu, China with approximately 37,074 residents.",
+    "fact_source": "https://www.geonames.org/7517266",
+    "known_for": "its local history, landscape, and community life",
+    "landmark": {
+      "image": "",
+      "name": "Tange",
+      "source": "https://www.geonames.org/7517266"
+    },
+    "person": {
+      "image": "",
+      "name": "People of Tange",
+      "source": "https://www.geonames.org/7517266"
+    },
+    "source": "https://www.geonames.org/7517266",
+    "source_label": "GeoNames",
+    "source_status": "catalog-fallback"
+  },
+  "critique": {
+    "mutation": {
+      "flow_scale": 0.0005,
+      "horizon": -0.01
+    },
+    "source": "fallback",
+    "verdict": "The measured novelty score has the clearest room to improve."
+  },
+  "date": "2026-10-10",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [
+    {
+      "component": "director",
+      "message": "Cloudflare response did not contain generated text"
+    },
+    {
+      "component": "critic",
+      "message": "Cloudflare response did not contain generated text"
+    }
+  ],
+  "palette": [
+    "#17263f",
+    "#527c94",
+    "#e19a67",
+    "#f5d7a4"
+  ],
+  "title": "Tange, China",
+  "weather": {
+    "apparent_temperature_c": 5.0,
+    "city": "Tange",
+    "cloud_cover": 40,
+    "country": "CN",
+    "country_name": "China",
+    "daylight_minutes": 689,
+    "geoname_id": "7517266",
+    "is_day": 0,
+    "latitude": 34.62764,
+    "local_time": "2026-10-11T01:15",
+    "longitude": 104.84062,
+    "precipitation_mm": 0.0,
+    "relative_humidity": 86,
+    "source": "Open-Meteo",
+    "sunrise": "07:02",
+    "sunset": "18:31",
+    "temperature_c": 6.5,
+    "timezone": "GMT+8",
+    "weather_code": 1,
+    "wind_direction": 207,
+    "wind_kph": 0.8
+  },
+  "winner": "explorer",
+  "winning_genome": {
+    "curl": 1.08697,
+    "flow_scale": 0.0102,
+    "horizon": 0.47762,
+    "light_x": 0.6619,
+    "light_y": 0.35126,
+    "opacity": 0.34908,
+    "step_length": 8.64292,
+    "steps": 25,
+    "stroke_count": 403,
+    "stroke_width": 1.48409
+  }
+}
