@@ -3,11 +3,11 @@
     "flow_scale": 0.0005,
     "horizon": -0.01
   },
-  "generation": 26,
+  "generation": 27,
   "genome": {
     "curl": 1.04136,
-    "flow_scale": 0.01189,
-    "horizon": 0.45359,
+    "flow_scale": 0.01239,
+    "horizon": 0.44359,
     "light_x": 0.63981,
     "light_y": 0.33913,
     "opacity": 0.27297,
@@ -16,5 +16,5 @@
     "stroke_count": 580,
     "stroke_width": 1.55943
   },
-  "updated": "2026-10-26"
+  "updated": "2026-10-27"
 }
