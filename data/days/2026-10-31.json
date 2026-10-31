@@ -1,0 +1,141 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 9.51,
+          "contrast": 10.0,
+          "coverage": 8.942,
+          "novelty": 0.0,
+          "stroke_length": 7.88,
+          "weather_fit": 9.851
+        },
+        "total": 8.157
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 9.51,
+          "contrast": 10.0,
+          "coverage": 8.942,
+          "novelty": 0.609,
+          "stroke_length": 7.88,
+          "weather_fit": 9.851
+        },
+        "total": 8.23
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 9.51,
+          "contrast": 10.0,
+          "coverage": 9.758,
+          "novelty": 1.56,
+          "stroke_length": 7.88,
+          "weather_fit": 9.102
+        },
+        "total": 8.356
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 8.719,
+          "contrast": 10.0,
+          "coverage": 8.286,
+          "novelty": 1.758,
+          "stroke_length": 7.353,
+          "weather_fit": 8.762
+        },
+        "total": 7.801
+      }
+    }
+  },
+  "city": {
+    "brief": "Lemp\u00e4\u00e4l\u00e4 (Finnish: [\u02c8lemp\u00e6\u02d0l\u00e6]) is a municipality in Finland, located in the Pirkanmaa region. It lies south of the regional capital, Tampere. The population of Lemp\u00e4\u00e4l\u00e4 is approximately 25,000, while the metropolitan area has a population of approximately 428,000. It is the 41st most populous municipality in Finland.",
+    "continent": "Europe",
+    "country_name": "Finland",
+    "fact": "It lies south of the regional capital, Tampere.",
+    "fact_source": "https://en.wikipedia.org/wiki/Lemp%C3%A4%C3%A4l%C3%A4",
+    "known_for": "its local history, landscape, and community life",
+    "landmark": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Ideapark_mall_lempaala_finland.jpg/960px-Ideapark_mall_lempaala_finland.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Ideapark Lemp\u00e4\u00e4l\u00e4",
+      "source": "https://en.wikipedia.org/wiki/Ideapark_Lemp%C3%A4%C3%A4l%C3%A4"
+    },
+    "person": {
+      "image": "",
+      "name": "People of Lemp\u00e4\u00e4l\u00e4",
+      "source": "https://www.geonames.org/648366"
+    },
+    "source": "https://en.wikipedia.org/wiki/Lemp%C3%A4%C3%A4l%C3%A4",
+    "source_label": "Wikipedia",
+    "source_status": "live"
+  },
+  "critique": {
+    "mutation": {
+      "flow_scale": 0.0005,
+      "horizon": -0.01
+    },
+    "source": "fallback",
+    "verdict": "The measured novelty score has the clearest room to improve."
+  },
+  "date": "2026-10-31",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [
+    {
+      "component": "director",
+      "message": "Cloudflare response did not contain generated text"
+    },
+    {
+      "component": "critic",
+      "message": "Cloudflare response did not contain generated text"
+    }
+  ],
+  "palette": [
+    "#182236",
+    "#536579",
+    "#a8a6a0",
+    "#e7c8a2"
+  ],
+  "title": "Lemp\u00e4\u00e4l\u00e4, Finland",
+  "weather": {
+    "apparent_temperature_c": 4.0,
+    "city": "Lemp\u00e4\u00e4l\u00e4",
+    "cloud_cover": 92,
+    "country": "FI",
+    "country_name": "Finland",
+    "daylight_minutes": 516,
+    "geoname_id": "648366",
+    "is_day": 0,
+    "latitude": 61.31667,
+    "local_time": "2026-10-31T19:00",
+    "longitude": 23.75,
+    "precipitation_mm": 0.0,
+    "relative_humidity": 91,
+    "source": "Open-Meteo",
+    "sunrise": "07:50",
+    "sunset": "16:26",
+    "temperature_c": 5.7,
+    "timezone": "GMT+2",
+    "weather_code": 3,
+    "wind_direction": 143,
+    "wind_kph": 2.5
+  },
+  "winner": "director",
+  "winning_genome": {
+    "curl": 0.73838,
+    "flow_scale": 0.01279,
+    "horizon": 0.44076,
+    "light_x": 0.65209,
+    "light_y": 0.33913,
+    "opacity": 0.29143,
+    "step_length": 9.19772,
+    "steps": 24,
+    "stroke_count": 465,
+    "stroke_width": 1.76297
+  }
+}
