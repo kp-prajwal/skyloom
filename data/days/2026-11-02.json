@@ -1,0 +1,141 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 9.51,
+          "contrast": 10.0,
+          "coverage": 9.758,
+          "novelty": 0.0,
+          "stroke_length": 7.88,
+          "weather_fit": 9.538
+        },
+        "total": 8.247
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 9.51,
+          "contrast": 10.0,
+          "coverage": 9.758,
+          "novelty": 0.609,
+          "stroke_length": 7.88,
+          "weather_fit": 9.538
+        },
+        "total": 8.321
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 9.51,
+          "contrast": 10.0,
+          "coverage": 9.682,
+          "novelty": 1.074,
+          "stroke_length": 7.88,
+          "weather_fit": 8.359
+        },
+        "total": 8.15
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 7.906,
+          "contrast": 10.0,
+          "coverage": 9.1,
+          "novelty": 2.175,
+          "stroke_length": 8.224,
+          "weather_fit": 9.538
+        },
+        "total": 8.089
+      }
+    }
+  },
+  "city": {
+    "brief": "Marostica (Italian pronunciation: [ma\u02c8r\u0254stika]; Venetian: Mar\u00f2stega [ma\u02c8\u027e\u0254ste\u0261a]), is a town and comune in the province of Vicenza, Veneto, northern Italy. It is mostly famous for its live chess event and for the local cherry variety.",
+    "continent": "Europe",
+    "country_name": "Italy",
+    "fact": "It is mostly famous for its live chess event and for the local cherry variety.",
+    "fact_source": "https://en.wikipedia.org/wiki/Marostica",
+    "known_for": "its local history, landscape, and community life",
+    "landmark": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/SAM_2348.JPG/960px-SAM_2348.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Cappeller Fauna Park",
+      "source": "https://en.wikipedia.org/wiki/Cappeller_Fauna_Park"
+    },
+    "person": {
+      "image": "",
+      "name": "People of Marostica",
+      "source": "https://www.geonames.org/3173878"
+    },
+    "source": "https://en.wikipedia.org/wiki/Marostica",
+    "source_label": "Wikipedia",
+    "source_status": "live"
+  },
+  "critique": {
+    "mutation": {
+      "flow_scale": 0.0005,
+      "horizon": -0.01
+    },
+    "source": "fallback",
+    "verdict": "The measured novelty score has the clearest room to improve."
+  },
+  "date": "2026-11-02",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [
+    {
+      "component": "director",
+      "message": "Cloudflare response did not contain generated text"
+    },
+    {
+      "component": "critic",
+      "message": "Cloudflare response did not contain generated text"
+    }
+  ],
+  "palette": [
+    "#17263f",
+    "#527c94",
+    "#e19a67",
+    "#f5d7a4"
+  ],
+  "title": "Marostica, Italy",
+  "weather": {
+    "apparent_temperature_c": 7.4,
+    "city": "Marostica",
+    "cloud_cover": 57,
+    "country": "IT",
+    "country_name": "Italy",
+    "daylight_minutes": 604,
+    "geoname_id": "3173878",
+    "is_day": 0,
+    "latitude": 45.74541,
+    "local_time": "2026-11-02T23:15",
+    "longitude": 11.66237,
+    "precipitation_mm": 0.0,
+    "relative_humidity": 73,
+    "source": "Open-Meteo",
+    "sunrise": "06:54",
+    "sunset": "16:58",
+    "temperature_c": 8.9,
+    "timezone": "GMT+1",
+    "weather_code": 1,
+    "wind_direction": 180,
+    "wind_kph": 0.4
+  },
+  "winner": "critic",
+  "winning_genome": {
+    "curl": 0.73838,
+    "flow_scale": 0.01379,
+    "horizon": 0.42076,
+    "light_x": 0.65209,
+    "light_y": 0.33913,
+    "opacity": 0.29143,
+    "step_length": 9.19772,
+    "steps": 24,
+    "stroke_count": 465,
+    "stroke_width": 1.76297
+  }
+}
