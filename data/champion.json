@@ -3,18 +3,18 @@
     "flow_scale": 0.0005,
     "horizon": -0.01
   },
-  "generation": 35,
+  "generation": 36,
   "genome": {
-    "curl": 0.73838,
-    "flow_scale": 0.01479,
-    "horizon": 0.40076,
-    "light_x": 0.65209,
-    "light_y": 0.33913,
-    "opacity": 0.29143,
-    "step_length": 9.19772,
-    "steps": 24,
+    "curl": 0.93325,
+    "flow_scale": 0.01418,
+    "horizon": 0.41213,
+    "light_x": 0.68791,
+    "light_y": 0.34592,
+    "opacity": 0.30676,
+    "step_length": 9.45125,
+    "steps": 23,
     "stroke_count": 465,
-    "stroke_width": 1.76297
+    "stroke_width": 1.81726
   },
-  "updated": "2026-11-04"
+  "updated": "2026-11-05"
 }

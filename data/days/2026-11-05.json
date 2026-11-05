@@ -1,0 +1,146 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 9.51,
+          "contrast": 10.0,
+          "coverage": 9.758,
+          "novelty": 0.0,
+          "stroke_length": 7.88,
+          "weather_fit": 8.561
+        },
+        "total": 8.072
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 9.51,
+          "contrast": 10.0,
+          "coverage": 9.758,
+          "novelty": 0.609,
+          "stroke_length": 7.88,
+          "weather_fit": 8.561
+        },
+        "total": 8.145
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 9.51,
+          "contrast": 10.0,
+          "coverage": 8.228,
+          "novelty": 1.875,
+          "stroke_length": 7.88,
+          "weather_fit": 7.677
+        },
+        "total": 7.862
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 9.228,
+          "contrast": 10.0,
+          "coverage": 9.937,
+          "novelty": 1.607,
+          "stroke_length": 8.112,
+          "weather_fit": 9.592
+        },
+        "total": 8.455
+      }
+    }
+  },
+  "city": {
+    "brief": "The German Confederation (German: Deutscher Bund [\u02c8d\u0254\u028ft\u0283\u0250 \u02c8b\u028ant] ) was an association of 39 predominantly German-speaking sovereign states in Central Europe from 1815 to 1866. It was created by the Congress of Vienna to replace the Holy Roman Empire, which dissolved in 1806 as a result of the Napoleonic Wars.",
+    "continent": "Europe",
+    "country_name": "Germany",
+    "fact": "It was created by the Congress of Vienna to replace the Holy Roman Empire, which dissolved in 1806 as a result of the Napoleonic Wars.",
+    "fact_source": "https://en.wikipedia.org/wiki/German_Confederation",
+    "known_for": "its local history, landscape, and community life",
+    "landmark": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Katharinenkirche%2C_Frankfurt%2C_North_view_20191013_1.jpg/960px-Katharinenkirche%2C_Frankfurt%2C_North_view_20191013_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "St. Catherine's Church, Frankfurt",
+      "source": "https://en.wikipedia.org/wiki/St._Catherine%27s_Church,_Frankfurt"
+    },
+    "person": {
+      "image": "",
+      "name": "People of Frankfurt am Main",
+      "source": "https://www.geonames.org/2925533"
+    },
+    "source": "https://en.wikipedia.org/wiki/German_Confederation",
+    "source_error": "person: The read operation timed out",
+    "source_label": "Wikipedia",
+    "source_status": "live"
+  },
+  "critique": {
+    "mutation": {
+      "flow_scale": 0.0005,
+      "horizon": -0.01
+    },
+    "source": "fallback",
+    "verdict": "The measured novelty score has the clearest room to improve."
+  },
+  "date": "2026-11-05",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [
+    {
+      "component": "city",
+      "message": "person: The read operation timed out"
+    },
+    {
+      "component": "director",
+      "message": "Cloudflare response did not contain generated text"
+    },
+    {
+      "component": "critic",
+      "message": "Cloudflare response did not contain generated text"
+    }
+  ],
+  "palette": [
+    "#17263f",
+    "#527c94",
+    "#e19a67",
+    "#f5d7a4"
+  ],
+  "title": "Frankfurt am Main, Germany",
+  "weather": {
+    "apparent_temperature_c": 3.8,
+    "city": "Frankfurt am Main",
+    "cloud_cover": 0,
+    "country": "DE",
+    "country_name": "Germany",
+    "daylight_minutes": 574,
+    "geoname_id": "2925533",
+    "is_day": 0,
+    "latitude": 50.11552,
+    "local_time": "2026-11-05T21:30",
+    "longitude": 8.68417,
+    "precipitation_mm": 0.0,
+    "relative_humidity": 71,
+    "source": "Open-Meteo",
+    "sunrise": "07:21",
+    "sunset": "16:55",
+    "temperature_c": 6.4,
+    "timezone": "GMT+1",
+    "weather_code": 0,
+    "wind_direction": 39,
+    "wind_kph": 5.1
+  },
+  "winner": "explorer",
+  "winning_genome": {
+    "curl": 0.93325,
+    "flow_scale": 0.01418,
+    "horizon": 0.41213,
+    "light_x": 0.68791,
+    "light_y": 0.34592,
+    "opacity": 0.30676,
+    "step_length": 9.45125,
+    "steps": 23,
+    "stroke_count": 465,
+    "stroke_width": 1.81726
+  }
+}
