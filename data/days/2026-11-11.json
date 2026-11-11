@@ -1,0 +1,141 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 9.172,
+          "contrast": 10.0,
+          "coverage": 9.64,
+          "novelty": 0.0,
+          "stroke_length": 7.717,
+          "weather_fit": 8.832
+        },
+        "total": 8.0
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 9.172,
+          "contrast": 10.0,
+          "coverage": 9.64,
+          "novelty": 0.609,
+          "stroke_length": 7.717,
+          "weather_fit": 8.832
+        },
+        "total": 8.073
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 9.172,
+          "contrast": 10.0,
+          "coverage": 8.666,
+          "novelty": 1.47,
+          "stroke_length": 7.717,
+          "weather_fit": 8.166
+        },
+        "total": 7.882
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 9.22,
+          "contrast": 10.0,
+          "coverage": 5.481,
+          "novelty": 2.741,
+          "stroke_length": 6.038,
+          "weather_fit": 9.103
+        },
+        "total": 7.388
+      }
+    }
+  },
+  "city": {
+    "brief": "Skierniewice (Polish pronunciation: [sk\u02b2\u025br\u0272\u025b\u02c8v\u02b2it\u0361s\u025b]) is a city in central Poland with 45,184 inhabitants (2023), situated in the \u0141\u00f3d\u017a Voivodeship. It is the capital of Skierniewice County. Through the town runs the small river \u0141upia, also called Skierniewka. Located in the historic region of Masovia, Skierniewice dates back to the medieval period.",
+    "continent": "Europe",
+    "country_name": "Poland",
+    "fact": "It is the capital of Skierniewice County.",
+    "fact_source": "https://en.wikipedia.org/wiki/Skierniewice",
+    "known_for": "its local history, landscape, and community life",
+    "landmark": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/5._Dworzec_Kolejowy_w_Skierniewicach.jpg/960px-5._Dworzec_Kolejowy_w_Skierniewicach.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Skierniewice railway station",
+      "source": "https://en.wikipedia.org/wiki/Skierniewice_railway_station"
+    },
+    "person": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/2021-Grzegorz-Gajewski.JPG/330px-2021-Grzegorz-Gajewski.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Grzegorz Gajewski",
+      "source": "https://en.wikipedia.org/wiki/Grzegorz_Gajewski"
+    },
+    "source": "https://en.wikipedia.org/wiki/Skierniewice",
+    "source_label": "Wikipedia",
+    "source_status": "live"
+  },
+  "critique": {
+    "mutation": {
+      "flow_scale": 0.0005,
+      "horizon": -0.01
+    },
+    "source": "fallback",
+    "verdict": "The measured novelty score has the clearest room to improve."
+  },
+  "date": "2026-11-11",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [
+    {
+      "component": "director",
+      "message": "Cloudflare response did not contain generated text"
+    },
+    {
+      "component": "critic",
+      "message": "Cloudflare response did not contain generated text"
+    }
+  ],
+  "palette": [
+    "#182236",
+    "#536579",
+    "#a8a6a0",
+    "#e7c8a2"
+  ],
+  "title": "Skierniewice, Poland",
+  "weather": {
+    "apparent_temperature_c": -1.3,
+    "city": "Skierniewice",
+    "cloud_cover": 95,
+    "country": "PL",
+    "country_name": "Poland",
+    "daylight_minutes": 543,
+    "geoname_id": "759123",
+    "is_day": 0,
+    "latitude": 51.95485,
+    "local_time": "2026-11-11T21:00",
+    "longitude": 20.15837,
+    "precipitation_mm": 0.0,
+    "relative_humidity": 95,
+    "source": "Open-Meteo",
+    "sunrise": "06:51",
+    "sunset": "15:54",
+    "temperature_c": 1.9,
+    "timezone": "GMT+1",
+    "weather_code": 3,
+    "wind_direction": 126,
+    "wind_kph": 8.6
+  },
+  "winner": "critic",
+  "winning_genome": {
+    "curl": 0.92707,
+    "flow_scale": 0.01683,
+    "horizon": 0.36432,
+    "light_x": 0.68617,
+    "light_y": 0.35129,
+    "opacity": 0.23366,
+    "step_length": 9.29616,
+    "steps": 24,
+    "stroke_count": 448,
+    "stroke_width": 1.90231
+  }
+}
