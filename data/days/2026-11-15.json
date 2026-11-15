@@ -1,0 +1,141 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 9.318,
+          "contrast": 10.0,
+          "coverage": 9.61,
+          "novelty": 0.0,
+          "stroke_length": 9.74,
+          "weather_fit": 8.906
+        },
+        "total": 8.344
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 9.318,
+          "contrast": 10.0,
+          "coverage": 9.61,
+          "novelty": 0.603,
+          "stroke_length": 9.74,
+          "weather_fit": 8.906
+        },
+        "total": 8.416
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 9.318,
+          "contrast": 10.0,
+          "coverage": 9.848,
+          "novelty": 0.944,
+          "stroke_length": 9.74,
+          "weather_fit": 8.409
+        },
+        "total": 8.41
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 9.291,
+          "contrast": 10.0,
+          "coverage": 7.751,
+          "novelty": 2.112,
+          "stroke_length": 9.879,
+          "weather_fit": 9.748
+        },
+        "total": 8.429
+      }
+    }
+  },
+  "city": {
+    "brief": "Bastos is a municipality in the state of S\u00e3o Paulo in Brazil. The population is 20,953 (2020 est.) in an area of 172 km2.",
+    "continent": "South America",
+    "country_name": "Brazil",
+    "fact": "The population is 20,953 (2020 est.) in an area of 172 km2.",
+    "fact_source": "https://en.wikipedia.org/wiki/Bastos,_Brazil",
+    "known_for": "its local history, landscape, and community life",
+    "landmark": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/SaoPaulo_Municip_Bastos.svg/960px-SaoPaulo_Municip_Bastos.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Bastos",
+      "source": "https://en.wikipedia.org/wiki/Bastos,_Brazil"
+    },
+    "person": {
+      "image": "",
+      "name": "People of Bastos",
+      "source": "https://www.geonames.org/3470341"
+    },
+    "source": "https://en.wikipedia.org/wiki/Bastos,_Brazil",
+    "source_label": "Wikipedia",
+    "source_status": "live"
+  },
+  "critique": {
+    "mutation": {
+      "flow_scale": 0.0005,
+      "horizon": -0.01
+    },
+    "source": "fallback",
+    "verdict": "The measured novelty score has the clearest room to improve."
+  },
+  "date": "2026-11-15",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [
+    {
+      "component": "director",
+      "message": "Cloudflare response did not contain generated text"
+    },
+    {
+      "component": "critic",
+      "message": "Cloudflare response did not contain generated text"
+    }
+  ],
+  "palette": [
+    "#182236",
+    "#536579",
+    "#a8a6a0",
+    "#e7c8a2"
+  ],
+  "title": "Bastos, Brazil",
+  "weather": {
+    "apparent_temperature_c": 29.7,
+    "city": "Bastos",
+    "cloud_cover": 81,
+    "country": "BR",
+    "country_name": "Brazil",
+    "daylight_minutes": 790,
+    "geoname_id": "3470341",
+    "is_day": 1,
+    "latitude": -21.92194,
+    "local_time": "2026-11-15T16:15",
+    "longitude": -50.73389,
+    "precipitation_mm": 0.0,
+    "relative_humidity": 70,
+    "source": "Open-Meteo",
+    "sunrise": "05:32",
+    "sunset": "18:42",
+    "temperature_c": 27.0,
+    "timezone": "GMT-3",
+    "weather_code": 3,
+    "wind_direction": 280,
+    "wind_kph": 11.3
+  },
+  "winner": "explorer",
+  "winning_genome": {
+    "curl": 1.30143,
+    "flow_scale": 0.01686,
+    "horizon": 0.3298,
+    "light_x": 0.6811,
+    "light_y": 0.35083,
+    "opacity": 0.19912,
+    "step_length": 8.18453,
+    "steps": 23,
+    "stroke_count": 413,
+    "stroke_width": 1.93379
+  }
+}
