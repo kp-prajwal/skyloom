@@ -1,0 +1,141 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 9.291,
+          "contrast": 10.0,
+          "coverage": 7.751,
+          "novelty": 0.0,
+          "stroke_length": 9.879,
+          "weather_fit": 9.686
+        },
+        "total": 8.164
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 9.291,
+          "contrast": 10.0,
+          "coverage": 7.751,
+          "novelty": 0.412,
+          "stroke_length": 9.879,
+          "weather_fit": 9.686
+        },
+        "total": 8.214
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 9.291,
+          "contrast": 10.0,
+          "coverage": 8.706,
+          "novelty": 1.429,
+          "stroke_length": 9.879,
+          "weather_fit": 9.799
+        },
+        "total": 8.528
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 9.21,
+          "contrast": 10.0,
+          "coverage": 7.017,
+          "novelty": 1.58,
+          "stroke_length": 9.314,
+          "weather_fit": 9.047
+        },
+        "total": 8.004
+      }
+    }
+  },
+  "city": {
+    "brief": "Belaya Glina (Russian: \u0411\u0435\u0301\u043b\u0430\u044f \u0413\u043b\u0438\u0301\u043d\u0430) is a rural locality (a selo) and the administrative center of Beloglinsky District of Krasnodar Krai, Russia, located 200 kilometers (120 mi) northeast from Krasnodar, on the banks of the Rassypnaya River. Population: 17,320 (2010 census); 17,767 (2002 census); 17,881 (1989 Soviet census). It was founded in 1820.",
+    "continent": "Europe",
+    "country_name": "Russia",
+    "fact": "Population: 17,320 (2010 census); 17,767 (2002 census); 17,881 (1989 Soviet census).",
+    "fact_source": "https://en.wikipedia.org/wiki/Belaya_Glina,_Krasnodar_Krai",
+    "known_for": "its local history, landscape, and community life",
+    "landmark": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/%D0%91%D0%B5%D0%BB%D0%B0%D1%8F_%D0%93%D0%BB%D0%B8%D0%BD%D0%B0_-_6.jpg/960px-%D0%91%D0%B5%D0%BB%D0%B0%D1%8F_%D0%93%D0%BB%D0%B8%D0%BD%D0%B0_-_6.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Belaya Glina",
+      "source": "https://en.wikipedia.org/wiki/Belaya_Glina,_Krasnodar_Krai"
+    },
+    "person": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Anatoly_Vasilyevich_Lyapidevskiy.jpg/330px-Anatoly_Vasilyevich_Lyapidevskiy.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Anatoly Lyapidevsky",
+      "source": "https://en.wikipedia.org/wiki/Anatoly_Lyapidevsky"
+    },
+    "source": "https://en.wikipedia.org/wiki/Belaya_Glina,_Krasnodar_Krai",
+    "source_label": "Wikipedia",
+    "source_status": "live"
+  },
+  "critique": {
+    "mutation": {
+      "flow_scale": 0.0005,
+      "horizon": -0.01
+    },
+    "source": "fallback",
+    "verdict": "The measured novelty score has the clearest room to improve."
+  },
+  "date": "2026-11-17",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [
+    {
+      "component": "director",
+      "message": "Cloudflare response did not contain generated text"
+    },
+    {
+      "component": "critic",
+      "message": "Cloudflare response did not contain generated text"
+    }
+  ],
+  "palette": [
+    "#182236",
+    "#536579",
+    "#a8a6a0",
+    "#e7c8a2"
+  ],
+  "title": "Belaya Glina, Russia",
+  "weather": {
+    "apparent_temperature_c": 0.2,
+    "city": "Belaya Glina",
+    "cloud_cover": 100,
+    "country": "RU",
+    "country_name": "Russia",
+    "daylight_minutes": 561,
+    "geoname_id": "578169",
+    "is_day": 0,
+    "latitude": 46.08115,
+    "local_time": "2026-11-18T00:30",
+    "longitude": 40.87351,
+    "precipitation_mm": 0.0,
+    "relative_humidity": 85,
+    "source": "Open-Meteo",
+    "sunrise": "07:20",
+    "sunset": "16:41",
+    "temperature_c": 3.7,
+    "timezone": "GMT+3",
+    "weather_code": 3,
+    "wind_direction": 122,
+    "wind_kph": 11.0
+  },
+  "winner": "director",
+  "winning_genome": {
+    "curl": 1.20393,
+    "flow_scale": 0.01736,
+    "horizon": 0.34,
+    "light_x": 0.6811,
+    "light_y": 0.35083,
+    "opacity": 0.17162,
+    "step_length": 8.18453,
+    "steps": 23,
+    "stroke_count": 453,
+    "stroke_width": 1.93379
+  }
+}
