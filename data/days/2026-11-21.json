@@ -1,0 +1,141 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 8.628,
+          "contrast": 10.0,
+          "coverage": 7.964,
+          "novelty": 0.0,
+          "stroke_length": 9.524,
+          "weather_fit": 8.597
+        },
+        "total": 7.808
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 8.628,
+          "contrast": 10.0,
+          "coverage": 7.964,
+          "novelty": 0.412,
+          "stroke_length": 9.524,
+          "weather_fit": 8.597
+        },
+        "total": 7.857
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 8.628,
+          "contrast": 10.0,
+          "coverage": 9.001,
+          "novelty": 1.57,
+          "stroke_length": 9.524,
+          "weather_fit": 8.094
+        },
+        "total": 8.092
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 8.66,
+          "contrast": 10.0,
+          "coverage": 8.153,
+          "novelty": 1.586,
+          "stroke_length": 9.761,
+          "weather_fit": 9.963
+        },
+        "total": 8.321
+      }
+    }
+  },
+  "city": {
+    "brief": "Pomar de Valdivia is a municipality located in the province of Palencia, Castile and Le\u00f3n, Spain. According to the 2004 census (INE), the municipality has a population of 531 inhabitants.",
+    "continent": "Europe",
+    "country_name": "Spain",
+    "fact": "According to the 2004 census (INE), the municipality has a population of 531 inhabitants.",
+    "fact_source": "https://en.wikipedia.org/wiki/Pomar_de_Valdivia",
+    "known_for": "its local history, landscape, and community life",
+    "landmark": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/ErmitaSantaEulalia_BarrioSantaMaria_002.JPG/960px-ErmitaSantaEulalia_BarrioSantaMaria_002.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Hermitage of Santa Eulalia",
+      "source": "https://en.wikipedia.org/wiki/Hermitage_of_Santa_Eulalia"
+    },
+    "person": {
+      "image": "",
+      "name": "People of Aguilar de Campoo",
+      "source": "https://www.geonames.org/3130824"
+    },
+    "source": "https://en.wikipedia.org/wiki/Pomar_de_Valdivia",
+    "source_label": "Wikipedia",
+    "source_status": "live"
+  },
+  "critique": {
+    "mutation": {
+      "flow_scale": 0.0005,
+      "horizon": -0.01
+    },
+    "source": "fallback",
+    "verdict": "The measured novelty score has the clearest room to improve."
+  },
+  "date": "2026-11-21",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [
+    {
+      "component": "director",
+      "message": "Cloudflare response did not contain generated text"
+    },
+    {
+      "component": "critic",
+      "message": "Cloudflare response did not contain generated text"
+    }
+  ],
+  "palette": [
+    "#101b2d",
+    "#425d73",
+    "#9ab0bd",
+    "#e6c7a3"
+  ],
+  "title": "Aguilar de Campoo, Spain",
+  "weather": {
+    "apparent_temperature_c": 8.1,
+    "city": "Aguilar de Campoo",
+    "cloud_cover": 100,
+    "country": "ES",
+    "country_name": "Spain",
+    "daylight_minutes": 573,
+    "geoname_id": "3130824",
+    "is_day": 0,
+    "latitude": 42.79452,
+    "local_time": "2026-11-21T21:00",
+    "longitude": -4.25892,
+    "precipitation_mm": 0.3,
+    "relative_humidity": 96,
+    "source": "Open-Meteo",
+    "sunrise": "08:16",
+    "sunset": "17:49",
+    "temperature_c": 9.7,
+    "timezone": "GMT+1",
+    "weather_code": 53,
+    "wind_direction": 201,
+    "wind_kph": 11.2
+  },
+  "winner": "explorer",
+  "winning_genome": {
+    "curl": 1.24288,
+    "flow_scale": 0.01715,
+    "horizon": 0.32,
+    "light_x": 0.70877,
+    "light_y": 0.34138,
+    "opacity": 0.21603,
+    "step_length": 7.46126,
+    "steps": 25,
+    "stroke_count": 427,
+    "stroke_width": 1.9645
+  }
+}
