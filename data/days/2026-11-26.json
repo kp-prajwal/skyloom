@@ -1,0 +1,141 @@
+{
+  "candidates": {
+    "champion": {
+      "score": {
+        "components": {
+          "composition": 9.357,
+          "contrast": 10.0,
+          "coverage": 9.567,
+          "novelty": 0.0,
+          "stroke_length": 9.338,
+          "weather_fit": 8.348
+        },
+        "total": 8.184
+      }
+    },
+    "critic": {
+      "score": {
+        "components": {
+          "composition": 9.357,
+          "contrast": 10.0,
+          "coverage": 9.567,
+          "novelty": 0.609,
+          "stroke_length": 9.338,
+          "weather_fit": 8.348
+        },
+        "total": 8.257
+      }
+    },
+    "director": {
+      "score": {
+        "components": {
+          "composition": 9.357,
+          "contrast": 10.0,
+          "coverage": 9.564,
+          "novelty": 1.419,
+          "stroke_length": 9.338,
+          "weather_fit": 8.151
+        },
+        "total": 8.318
+      }
+    },
+    "explorer": {
+      "score": {
+        "components": {
+          "composition": 9.115,
+          "contrast": 10.0,
+          "coverage": 9.748,
+          "novelty": 1.625,
+          "stroke_length": 9.338,
+          "weather_fit": 8.512
+        },
+        "total": 8.388
+      }
+    }
+  },
+  "city": {
+    "brief": "Zoucheng (Chinese: \u90b9\u57ce\u5e02; pinyin: Z\u014duch\u00e9ng sh\u00ec) is a county-level city in the south of Shandong province, China. Before it was incorporated as a city in October 1992, it was known as Zou County (\u90b9\u53bf) or Zouxian. Zoucheng is located about 20 km south of the city of Qufu, and like Qufu, is administratively under the prefecture-level city of Jining. Its population was 1,116,692 at the 2010 census.",
+    "continent": "Asia",
+    "country_name": "China",
+    "fact": "Before it was incorporated as a city in October 1992, it was known as Zou County (\u90b9\u53bf) or Zouxian.",
+    "fact_source": "https://en.wikipedia.org/wiki/Zoucheng",
+    "known_for": "its local history, landscape, and community life",
+    "landmark": {
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/67/%E9%84%92%E5%9F%8E%E5%AD%9F%E5%BB%9F%E5%85%A5%E5%8F%A3.jpg/960px-%E9%84%92%E5%9F%8E%E5%AD%9F%E5%BB%9F%E5%85%A5%E5%8F%A3.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "name": "Zoucheng",
+      "source": "https://en.wikipedia.org/wiki/Zoucheng"
+    },
+    "person": {
+      "image": "",
+      "name": "Cui Bo",
+      "source": "https://en.wikipedia.org/wiki/Cui_Bo"
+    },
+    "source": "https://en.wikipedia.org/wiki/Zoucheng",
+    "source_label": "Wikipedia",
+    "source_status": "live"
+  },
+  "critique": {
+    "mutation": {
+      "flow_scale": 0.0005,
+      "horizon": -0.01
+    },
+    "source": "fallback",
+    "verdict": "The measured novelty score has the clearest room to improve."
+  },
+  "date": "2026-11-26",
+  "direction_rationale": "Deterministic weather direction used because cloud inference was unavailable.",
+  "direction_source": "fallback",
+  "errors": [
+    {
+      "component": "director",
+      "message": "Cloudflare response did not contain generated text"
+    },
+    {
+      "component": "critic",
+      "message": "Cloudflare response did not contain generated text"
+    }
+  ],
+  "palette": [
+    "#182236",
+    "#536579",
+    "#a8a6a0",
+    "#e7c8a2"
+  ],
+  "title": "Zoucheng, China",
+  "weather": {
+    "apparent_temperature_c": 4.2,
+    "city": "Zoucheng",
+    "cloud_cover": 97,
+    "country": "CN",
+    "country_name": "China",
+    "daylight_minutes": 602,
+    "geoname_id": "1783633",
+    "is_day": 0,
+    "latitude": 35.40056,
+    "local_time": "2026-11-27T06:15",
+    "longitude": 116.96556,
+    "precipitation_mm": 0.0,
+    "relative_humidity": 41,
+    "source": "Open-Meteo",
+    "sunrise": "06:58",
+    "sunset": "17:00",
+    "temperature_c": 9.2,
+    "timezone": "GMT+8",
+    "weather_code": 3,
+    "wind_direction": 320,
+    "wind_kph": 16.1
+  },
+  "winner": "explorer",
+  "winning_genome": {
+    "curl": 1.1611,
+    "flow_scale": 0.01577,
+    "horizon": 0.32,
+    "light_x": 0.68824,
+    "light_y": 0.35167,
+    "opacity": 0.22307,
+    "step_length": 7.84333,
+    "steps": 23,
+    "stroke_count": 483,
+    "stroke_width": 2.16329
+  }
+}
